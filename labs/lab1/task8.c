@@ -10,24 +10,24 @@ int main() {
     char temp_filename[] = "temp.txt";
 
     // Введите имя файла
-    printf("Введите имя файла: ");
+    printf("Enter the file name:");
     scanf("%s", filename);
 
     // Открываем файл для чтения
     file = fopen(filename, "r");
     if (file == NULL) {
-        perror("Ошибка при открытии файла");
+        perror("ERROR = ( ");
         return 1;
     }
 
     // Введите информацию для добавления в начало файла
-    printf("Введите информацию для добавления в начало файла:\n");
+    printf("Enter the information to add to the beginning of the file: \n");
     scanf(" %[^\n]", new_info);
 
     // Открываем временный файл для записи
     FILE *temp_file = fopen(temp_filename, "w");
     if (temp_file == NULL) {
-        perror("Ошибка при создании временного файла");
+        perror("Error creating temporary file ");
         fclose(file);
         return 1;
     }
@@ -49,11 +49,11 @@ int main() {
     rename(temp_filename, filename);
 
     // Выводим содержимое файла
-    printf("Содержимое файла после изменений:\n");
+    printf("File contents after changes:\n");
 
     file = fopen(filename, "r");
     if (file == NULL) {
-        perror("Ошибка при открытии файла");
+        perror("Error file = (");
         return 1;
     }
 

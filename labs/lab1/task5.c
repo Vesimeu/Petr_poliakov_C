@@ -4,7 +4,7 @@
 int main(int argc, char *argv[]) {
     // Проверяем, передано ли имя файла как аргумент
     if (argc != 2) {
-        printf("Использование: %s <имя_файла>\n", argv[0]);
+        printf("Using: %s <name file>\n", argv[0]);
         return 1;
     }
 
@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
     FILE *file = fopen(argv[1], "r");
     
     if (file == NULL) {
-        perror("Ошибка при открытии файла");
+        perror("ERROR = ( ");
         return 1;
     }
 

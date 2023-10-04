@@ -4,21 +4,21 @@ int main() {
     double a, b, c, x;
 
     // Введите коэффициенты a, b и c
-    printf("Введите значение a: ");
+    printf("Enter the value a: ");
     scanf("%lf", &a);
 
-    printf("Введите значение b: ");
+    printf("Enter the value b: ");
     scanf("%lf", &b);
 
-    printf("Введите значение c: ");
+    printf("Enter the value c: ");
     scanf("%lf", &c);
 
     // Решение линейного уравнения
     if (a == 0) {
         if (b == c) {
-            printf("x - любое число\n");
+            printf("x is any number\n");
         } else {
-            printf("Уравнение не имеет решения\n");
+            printf("The equation has no solution = ( \n");
         }
     } else {
         x = (c - b) / a;

@@ -9,24 +9,24 @@ int main() {
     int line_count = 0;
 
     // Введите имя исходного файла
-    printf("Введите имя исходного файла: ");
+    printf("Enter the name of the source file: ");
     scanf("%s", source_filename);
 
     // Открываем исходный файл для чтения
     source_file = fopen(source_filename, "r");
     if (source_file == NULL) {
-        perror("Ошибка при открытии исходного файла");
+        perror("ERROR = (");
         return 1;
     }
 
     // Введите имя файла для вывода первых трех строк
-    printf("Введите имя файла для вывода первых трех строк: ");
+    printf("Enter the file name to output the first three lines: ");
     scanf("%s", output_filename);
 
     // Открываем файл для записи первых трех строк
     output_file = fopen(output_filename, "w");
     if (output_file == NULL) {
-        perror("Ошибка при создании файла для вывода");
+        perror("Error when creating a file for output");
         fclose(source_file);
         return 1;
     }

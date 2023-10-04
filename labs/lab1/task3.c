@@ -1,11 +1,11 @@
 #include <stdio.h>
 
 int main(int argc, char *argv[]) {
-    printf("Количество аргументов: %d\n", argc);
+    printf("Number of arguments: %d\n", argc);
 
-    printf("Аргументы:\n");
+    printf("Arguments:n");
     for (int i = 0; i < argc; i++) {
-        printf("Аргумент %d: %s\n", i, argv[i]);
+        printf("Argument: %d: %s\n", i, argv[i]);
     }
 
     return 0;

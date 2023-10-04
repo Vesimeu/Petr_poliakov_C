@@ -8,18 +8,18 @@ int main() {
     char new_line[1024];
 
     // Введите имя файла
-    printf("Введите имя файла для дописывания: ");
+    printf("Enter the name of the file to add: ");
     scanf("%s", filename);
 
     // Открываем файл для дописывания (режим "a" - дописывание)
     file = fopen(filename, "a");
     if (file == NULL) {
-        perror("Ошибка при открытии файла");
+        perror("Error opening the file");
         return 1;
     }
 
     // Введите строку для дописывания
-    printf("Введите строку для дописывания в файл: ");
+    printf("Enter a line to add to the file: ");
     scanf(" %[^\n]", new_line);
 
     // Дописываем строку в файл
@@ -29,11 +29,11 @@ int main() {
     fclose(file);
 
     // Выводим содержимое файла
-    printf("Содержимое файла после дописывания:\n");
+    printf("The contents of the file after appending: \n");
 
     file = fopen(filename, "r");
     if (file == NULL) {
-        perror("Ошибка при открытии файла");
+        perror("ERROR = ( ");
         return 1;
     }
 

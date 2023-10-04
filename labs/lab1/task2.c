@@ -4,10 +4,10 @@ int main() {
     int a, b, c;
     
     // Введите значения a и b
-    printf("Введите значение a: ");
+    printf("Enter the value a: ");
     scanf("%d", &a);
     
-    printf("Введите значение b: ");
+    printf("Enter the value b: ");
     scanf("%d", &b);
     
     // Выполнение операции c = a + b
