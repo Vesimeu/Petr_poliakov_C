@@ -42,12 +42,25 @@ int evaluatePostfixExpression(const char *expression) {
     int length = strlen(expression);
 
     for (int i = 0; i < length; i++) {
-        if (isdigit(expression[i])) {
-            // Если символ - цифра, преобразуем его в число и добавляем в стек
-            push(&stack, expression[i] - '0');
+        if (isspace(expression[i])) {
+            continue; // Пропускаем пробелы
+        } else if (isdigit(expression[i])) {
+            int num = 0;
+            while (i < length && isdigit(expression[i])) {
+                num = num * 10 + (expression[i] - '0');
+                i++;
+            }
+            push(&stack, num);
         } else if (expression[i] == '+' || expression[i] == '-' || expression[i] == '*' || expression[i] == '/') {
-            // Если символ - оператор, извлекаем два последних числа из стека и выполняем операцию
+            if (isEmpty(&stack)) {
+                printf("Error: Not enough operands before operator %c.\n", expression[i]);
+                return -1;
+            }
             int operand2 = pop(&stack);
+            if (isEmpty(&stack)) {
+                printf("Error: Not enough operands before operator %c.\n", expression[i]);
+                return -1;
+            }
             int operand1 = pop(&stack);
             int result = 0;
 
@@ -65,7 +78,7 @@ int evaluatePostfixExpression(const char *expression) {
                     if (operand2 != 0) {
                         result = operand1 / operand2;
                     } else {
-                        printf("Error\n");
+                        printf("Error: Division by zero.\n");
                         return -1;
                     }
                     break;
@@ -76,9 +89,23 @@ int evaluatePostfixExpression(const char *expression) {
         }
     }
 
-    // Возвращаем значение, оставшееся в стеке (результат вычисления)
-    return pop(&stack);
+    if (!isEmpty(&stack)) {
+        int finalResult = pop(&stack);
+        if (isEmpty(&stack)) {
+            return finalResult;
+        } else {
+            printf("Error: Not enough operators at the end.\n");
+            return -1;
+        }
+    } else {
+        printf("Error: Empty expression.\n");
+        return -1;
+    }
 }
+
+
+
+
 
 int main() {
     // Открываем входной файл для чтения
@@ -89,16 +116,25 @@ int main() {
     }
 
     char expression[100];
-    fscanf(inputFile, "%s", expression);
+    if (fgets(expression, sizeof(expression), inputFile) != NULL) {
+        // Убедитесь, что fgets считал строку и добавил символ новой строки
+        // в конец строки (если он есть в файле).
+        int len = strlen(expression);
+        if (len > 0 && expression[len - 1] == '\n') {
+            expression[len - 1] = '\0'; // Удаляем символ новой строки
+        }
 
-    // Закрываем входной файл
-    fclose(inputFile);
+        // Закрываем входной файл
+        fclose(inputFile);
 
-    // Вычисляем значение выражения
-    int result = evaluatePostfixExpression(expression);
+        // Вычисляем значение выражения
+        int result = evaluatePostfixExpression(expression);
 
-    if (result != -1) {
-        printf("Meaning of the expression: %d\n", result);
+        if (result != -1) {
+            printf("Meaning of the expression: %d\n", result);
+        }
+    } else {
+        printf("Error reading from file.\n");
     }
 
     return 0;
