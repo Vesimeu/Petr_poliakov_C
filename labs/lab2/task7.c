@@ -117,8 +117,6 @@ int main() {
 
     char expression[100];
     if (fgets(expression, sizeof(expression), inputFile) != NULL) {
-        // Убедитесь, что fgets считал строку и добавил символ новой строки
-        // в конец строки (если он есть в файле).
         int len = strlen(expression);
         if (len > 0 && expression[len - 1] == '\n') {
             expression[len - 1] = '\0'; // Удаляем символ новой строки

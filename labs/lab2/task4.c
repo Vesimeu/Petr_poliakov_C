@@ -36,34 +36,31 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    // Установим начальное значение для генератора случайных чисел на основе времени
     srand(time(NULL));
 
-    // Создаем и заполняем массив случайными числами в заданном интервале
+
     float random_array[array_size];
     for (int i = 0; i < array_size; i++) {
         float random_number = lower_bound + ((float)rand() / RAND_MAX) * (upper_bound - lower_bound);
         random_array[i] = random_number;
     }
 
-    // Выводим массив в консоль
+
     printf("Random array size %d in the interval (%.2f, %.2f):\n", array_size, lower_bound, upper_bound);
     for (int i = 0; i < array_size; i++) {
         printf("%.2f ", random_array[i]);
     }
     printf("\n");
 
-    // Сортируем массив
+
     bubbleSort(random_array, array_size);
 
-    // Выводим отсортированный массив в консоль
     printf("Sorted array:\n");
     for (int i = 0; i < array_size; i++) {
         printf("%.2f ", random_array[i]);
     }
     printf("\n");
 
-    // Записываем отсортированный массив в файл
     FILE *file = fopen("sorted_array.txt", "w");
     if (file == NULL) {
         printf("Error^ka .\n");
