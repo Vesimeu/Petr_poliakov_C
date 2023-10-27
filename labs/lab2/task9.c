@@ -5,7 +5,7 @@
 //git : https://github.com/Vesimeu
 
 
-typedef struct {
+typedef struct StackNode {
     char data;
     struct StackNode* next;
 } StackNode;
@@ -120,7 +120,8 @@ int main() {
         char infixExpression[100];
         char postfixExpression[100];
         printf("Введите арифметическое выражение в инфиксной нотации (или 'exit' для завершения): ");
-        gets(infixExpression);
+        scanf("%[^\n]s", infixExpression); 
+        getchar(); //need using gets or fgets
 
         if (strcmp(infixExpression, "exit") == 0) {
             printf("Программа завершена.\n");
