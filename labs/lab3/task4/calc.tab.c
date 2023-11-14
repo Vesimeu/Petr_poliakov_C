@@ -94,7 +94,51 @@
 #  endif
 # endif
 
-#include "calc.tab.h"
+
+/* Debug traces.  */
+#ifndef YYDEBUG
+# define YYDEBUG 0
+#endif
+#if YYDEBUG
+extern int yydebug;
+#endif
+
+/* Token kinds.  */
+#ifndef YYTOKENTYPE
+# define YYTOKENTYPE
+  enum yytokentype
+  {
+    YYEMPTY = -2,
+    YYEOF = 0,                     /* "end of file"  */
+    YYerror = 256,                 /* error  */
+    YYUNDEF = 257,                 /* "invalid token"  */
+    FLOAT = 258,                   /* FLOAT  */
+    INTEGER = 259,                 /* INTEGER  */
+    PLUS = 260,                    /* PLUS  */
+    MINUS = 261,                   /* MINUS  */
+    TIMES = 262,                   /* TIMES  */
+    DIVIDE = 263,                  /* DIVIDE  */
+    LPAREN = 264,                  /* LPAREN  */
+    RPAREN = 265                   /* RPAREN  */
+  };
+  typedef enum yytokentype yytoken_kind_t;
+#endif
+
+/* Value type.  */
+#if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
+typedef int YYSTYPE;
+# define YYSTYPE_IS_TRIVIAL 1
+# define YYSTYPE_IS_DECLARED 1
+#endif
+
+
+extern YYSTYPE yylval;
+
+
+int yyparse (void);
+
+
+
 /* Symbol kind.  */
 enum yysymbol_kind_t
 {
@@ -1058,17 +1102,17 @@ yyreduce:
   case 2: /* number: FLOAT  */
 #line 14 "calc.y"
                { printf("%f ", yyvsp[0]); }
-#line 1062 "calc.tab.c"
+#line 1106 "calc.tab.c"
     break;
 
   case 3: /* number: INTEGER  */
 #line 15 "calc.y"
                { printf("%d" , yyvsp[0]); }
-#line 1068 "calc.tab.c"
+#line 1112 "calc.tab.c"
     break;
 
 
-#line 1072 "calc.tab.c"
+#line 1116 "calc.tab.c"
 
       default: break;
     }
