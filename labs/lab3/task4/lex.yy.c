@@ -447,8 +447,9 @@ char *yytext;
 #line 1 "calc.l"
 #line 2 "calc.l"
 #include "calc.tab.h"
-#line 451 "lex.yy.c"
+#include <stdio.h>
 #line 452 "lex.yy.c"
+#line 453 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -665,10 +666,10 @@ YY_DECL
 		}
 
 	{
-#line 5 "calc.l"
+#line 6 "calc.l"
 
 
-#line 672 "lex.yy.c"
+#line 673 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -727,61 +728,61 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 7 "calc.l"
+#line 8 "calc.l"
 { yylval = atof(yytext); return FLOAT; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 8 "calc.l"
+#line 9 "calc.l"
 { yylval = atoi(yytext); return INTEGER; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 9 "calc.l"
+#line 10 "calc.l"
 { return PLUS; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 10 "calc.l"
+#line 11 "calc.l"
 { return MINUS; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 11 "calc.l"
+#line 12 "calc.l"
 { return TIMES; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 12 "calc.l"
+#line 13 "calc.l"
 { return DIVIDE; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 13 "calc.l"
+#line 14 "calc.l"
 { return LPAREN; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 14 "calc.l"
+#line 15 "calc.l"
 { return RPAREN; }
 	YY_BREAK
 case 9:
 /* rule 9 can match eol */
 YY_RULE_SETUP
-#line 15 "calc.l"
+#line 16 "calc.l"
 { /* игнорируем пробелы и символы конца строки */ }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 16 "calc.l"
+#line 17 "calc.l"
 { yyerror("unexpected character"); }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 18 "calc.l"
+#line 19 "calc.l"
 ECHO;
 	YY_BREAK
-#line 785 "lex.yy.c"
+#line 786 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1786,7 +1787,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 18 "calc.l"
+#line 19 "calc.l"
 
 
 int yywrap() {

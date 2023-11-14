@@ -44,6 +44,13 @@
 #if YYDEBUG
 extern int yydebug;
 #endif
+/* "%code requires" blocks.  */
+#line 2 "calc.y"
+
+    #define YYSTYPE double
+  
+
+#line 54 "calc.tab.h"
 
 /* Token kinds.  */
 #ifndef YYTOKENTYPE
