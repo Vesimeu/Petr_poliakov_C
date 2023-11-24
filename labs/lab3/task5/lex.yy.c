@@ -351,8 +351,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 11
-#define YY_END_OF_BUFFER 12
+#define YY_NUM_RULES 12
+#define YY_END_OF_BUFFER 13
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -362,16 +362,16 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[18] =
     {   0,
-        0,    0,   12,   10,    9,    9,    7,    8,    5,    1,
+        0,    0,   13,   11,    9,   10,    7,    8,    5,    1,
         2,    6,    4,    0,    4,    3,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
     {   0,
-        1,    1,    1,    1,    1,    1,    1,    1,    2,    3,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    2,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    2,    1,    1,    1,    1,    1,    1,    1,    4,
+        1,    3,    1,    1,    1,    1,    1,    1,    1,    4,
         5,    6,    7,    1,    8,    9,   10,   11,   11,   11,
        11,   11,   11,   11,   11,   11,   11,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -447,8 +447,9 @@ char *yytext;
 #line 1 "calc.l"
 #line 2 "calc.l"
 #include "calc.tab.h"
-#line 451 "lex.yy.c"
+void yyerror(const char *s);
 #line 452 "lex.yy.c"
+#line 453 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -665,9 +666,9 @@ YY_DECL
 		}
 
 	{
-#line 5 "calc.l"
+#line 6 "calc.l"
 
-#line 671 "lex.yy.c"
+#line 672 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -726,61 +727,66 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 6 "calc.l"
+#line 7 "calc.l"
 { return ADD; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 7 "calc.l"
+#line 8 "calc.l"
 { return SUB; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 8 "calc.l"
+#line 9 "calc.l"
 { yylval.d = atof(yytext); return NUMBER; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 9 "calc.l"
+#line 10 "calc.l"
 { yylval.d = atof(yytext); return NUMBER; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 10 "calc.l"
+#line 11 "calc.l"
 { return '*'; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 11 "calc.l"
+#line 12 "calc.l"
 { return '/'; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 12 "calc.l"
+#line 13 "calc.l"
 { return '('; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 13 "calc.l"
+#line 14 "calc.l"
 { return ')'; }
 	YY_BREAK
 case 9:
 /* rule 9 can match eol */
 YY_RULE_SETUP
-#line 14 "calc.l"
-{ /* skip whitespace */ }
+#line 15 "calc.l"
+{ return AND; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 15 "calc.l"
-{ yyerror("unknown character"); }
+#line 16 "calc.l"
+{};
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 17 "calc.l"
+{ yyerror("unknown character"); }
+	YY_BREAK
+case 12:
+YY_RULE_SETUP
+#line 19 "calc.l"
 ECHO;
 	YY_BREAK
-#line 784 "lex.yy.c"
+#line 790 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1785,7 +1791,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 17 "calc.l"
+#line 19 "calc.l"
 
 
 int yywrap(void) {

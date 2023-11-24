@@ -56,7 +56,8 @@ extern int yydebug;
     YYUNDEF = 257,                 /* "invalid token"  */
     NUMBER = 258,                  /* NUMBER  */
     ADD = 259,                     /* ADD  */
-    SUB = 260                      /* SUB  */
+    SUB = 260,                     /* SUB  */
+    AND = 261                      /* AND  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -70,7 +71,7 @@ union YYSTYPE
   struct ast *a;
   double d;
 
-#line 74 "calc.tab.h"
+#line 75 "calc.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

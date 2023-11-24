@@ -1,5 +1,6 @@
 %{
 #include "calc.tab.h"
+void yyerror(const char *s);
 %}
 
 %%
@@ -11,7 +12,8 @@
 "/" { return '/'; }
 "(" { return '('; }
 ")" { return ')'; }
-[ \t\n] { /* skip whitespace */ }
+[\n] { return AND; }
+" " {};
 . { yyerror("unknown character"); }
 
 %%
