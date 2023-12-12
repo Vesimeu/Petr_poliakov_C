@@ -54,30 +54,30 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    CREATE_OBJECT = 258,           /* CREATE_OBJECT  */
-    IF = 259,                      /* IF  */
-    ELSE = 260,                    /* ELSE  */
-    TURN_ON = 261,                 /* TURN_ON  */
-    TURN_OFF = 262,                /* TURN_OFF  */
-    SET_TEMPERATURE = 263,         /* SET_TEMPERATURE  */
-    SET_VOLUME = 264,              /* SET_VOLUME  */
-    GRANT_ACCESS = 265,            /* GRANT_ACCESS  */
-    CURRENT_TIME = 266,            /* CURRENT_TIME  */
-    SUNRISE_TIME = 267,            /* SUNRISE_TIME  */
-    SUNSET_TIME = 268,             /* SUNSET_TIME  */
-    ID = 269,                      /* ID  */
-    INTEGER = 270,                 /* INTEGER  */
-    COLON = 271,                   /* COLON  */
-    SEMICOLON = 272,               /* SEMICOLON  */
-    LPAREN = 273,                  /* LPAREN  */
-    RPAREN = 274,                  /* RPAREN  */
-    LBRACE = 275,                  /* LBRACE  */
-    RBRACE = 276,                  /* RBRACE  */
-    EQUAL = 277,                   /* EQUAL  */
-    GREATER = 278,                 /* GREATER  */
-    LESS = 279,                    /* LESS  */
-    COMMA = 280,                   /* COMMA  */
-    STRING = 281,                  /* STRING  */
+    INTEGER = 258,                 /* INTEGER  */
+    STRING = 259,                  /* STRING  */
+    CREATE_OBJECT = 260,           /* CREATE_OBJECT  */
+    IF = 261,                      /* IF  */
+    ELSE = 262,                    /* ELSE  */
+    TURN_ON = 263,                 /* TURN_ON  */
+    TURN_OFF = 264,                /* TURN_OFF  */
+    SET_TEMPERATURE = 265,         /* SET_TEMPERATURE  */
+    SET_VOLUME = 266,              /* SET_VOLUME  */
+    GRANT_ACCESS = 267,            /* GRANT_ACCESS  */
+    CURRENT_TIME = 268,            /* CURRENT_TIME  */
+    SUNRISE_TIME = 269,            /* SUNRISE_TIME  */
+    SUNSET_TIME = 270,             /* SUNSET_TIME  */
+    ID = 271,                      /* ID  */
+    COLON = 272,                   /* COLON  */
+    SEMICOLON = 273,               /* SEMICOLON  */
+    LPAREN = 274,                  /* LPAREN  */
+    RPAREN = 275,                  /* RPAREN  */
+    LBRACE = 276,                  /* LBRACE  */
+    RBRACE = 277,                  /* RBRACE  */
+    EQUAL = 278,                   /* EQUAL  */
+    GREATER = 279,                 /* GREATER  */
+    LESS = 280,                    /* LESS  */
+    COMMA = 281,                   /* COMMA  */
     DOT = 282                      /* DOT  */
   };
   typedef enum yytokentype yytoken_kind_t;
@@ -87,12 +87,13 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 24 "smarthome.y"
+#line 40 "smarthome.y"
 
     int intval;
     char* strval;
+    SmartObject* objectval;
 
-#line 96 "smarthome.tab.h"
+#line 97 "smarthome.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
