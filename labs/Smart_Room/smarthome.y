@@ -4,7 +4,6 @@
 #include "smart_objects.h"
 #include <string.h>
 #include "smarthome.tab.h"
-#include "smart_objects.c"
 
 // typedef union {
 //     int intval;

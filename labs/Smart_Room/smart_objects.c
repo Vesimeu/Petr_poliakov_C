@@ -16,6 +16,7 @@ SmartObject* create_object(const char* name) {
     obj->state.light_state = 0; // Изначально свет выключен
     obj->state.thermostat_temperature = 0; // Изначально температура не установлена
     obj->state.blinds_state = 0; // Изначально жалюзи выключены
+    printf("успех");
 
     return obj;
 }

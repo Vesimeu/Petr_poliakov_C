@@ -74,7 +74,6 @@
 #include "smart_objects.h"
 #include <string.h>
 #include "smarthome.tab.h"
-#include "smart_objects.c"
 
 // typedef union {
 //     int intval;
@@ -92,17 +91,10 @@ extern char* yytext;
 
 struct SmartObject;
 
-
-// typedef union {
-//     int intval;
-//     char* strval;
-//     struct SmartObject* objectval; // sukaebanaya
-// } YYSTYPE;
-
 void yyerror(const char* s);
 
 
-#line 106 "smarthome.tab.c"
+#line 98 "smarthome.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -558,9 +550,9 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    56,    56,    59,    60,    63,    64,    65,    68,    71,
-      72,    75,    79,    80,    84,    85,    86,    87,    88,    89,
-      92,    93,    94,    97,   100
+       0,    48,    48,    51,    52,    55,    56,    57,    60,    63,
+      64,    67,    71,    72,    76,    77,    78,    79,    80,    81,
+      84,    85,    86,    89,    92
 };
 #endif
 
@@ -1149,13 +1141,13 @@ yyreduce:
   switch (yyn)
     {
   case 8: /* create_object_statement: CREATE_OBJECT STRING  */
-#line 68 "smarthome.y"
+#line 60 "smarthome.y"
                                               { (yyval.intval) = create_object((yyvsp[0].strval)); }
-#line 1155 "smarthome.tab.c"
+#line 1147 "smarthome.tab.c"
     break;
 
 
-#line 1159 "smarthome.tab.c"
+#line 1151 "smarthome.tab.c"
 
       default: break;
     }
@@ -1348,7 +1340,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 103 "smarthome.y"
+#line 95 "smarthome.y"
 
 
 void yyerror(const char* s) {
