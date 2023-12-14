@@ -78,7 +78,12 @@ extern int yydebug;
     GREATER = 279,                 /* GREATER  */
     LESS = 280,                    /* LESS  */
     COMMA = 281,                   /* COMMA  */
-    DOT = 282                      /* DOT  */
+    DOT = 282,                     /* DOT  */
+    TURN_ON_LIGHT = 283,           /* TURN_ON_LIGHT  */
+    TURN_OFF_LIGHT = 284,          /* TURN_OFF_LIGHT  */
+    TURN_ON_BLINDS = 285,          /* TURN_ON_BLINDS  */
+    TURN_OFF_BLINDS = 286,         /* TURN_OFF_BLINDS  */
+    STATUS = 287                   /* STATUS  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -87,13 +92,14 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 32 "smarthome.y"
+#line 29 "smarthome.y"
 
     int intval;
     char* strval;
     SmartObject* objectval;
+    ObjectState stateval;  // Добавляем новый тип для хранения состояния объекта
 
-#line 97 "smarthome.tab.h"
+#line 103 "smarthome.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

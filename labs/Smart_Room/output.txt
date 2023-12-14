@@ -1,0 +1,9 @@
+Object '"living_room"' created with initial attributes:
+Light State: 0
+Thermostat Temperature: 0 degrees
+Blinds State: 0
+"living_room": Blinds turned on
+"living_room" State: Light=0, Thermostat=0, Blinds=1
+"living_room": Light turned on
+"living_room" State: Light=1, Thermostat=0, Blinds=0
+"living_room" State: Light=0, Thermostat=0, Blinds=0
