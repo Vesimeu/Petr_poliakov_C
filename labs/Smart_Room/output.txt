@@ -1,9 +1,14 @@
-Object '"living_room"' created with initial attributes:
+Комната "living_room" успешно создана с атрибутами:
 Light State: 0
 Thermostat Temperature: 0 degrees
 Blinds State: 0
+"living_room": Свет включен!
 "living_room": Blinds turned on
-"living_room" State: Light=0, Thermostat=0, Blinds=1
-"living_room": Light turned on
-"living_room" State: Light=1, Thermostat=0, Blinds=0
-"living_room" State: Light=0, Thermostat=0, Blinds=0
+"living_room": Температура в комнате установлена 25 градусов
+Текущее состояние команты "living_room" : Свет=1, Температура=25, Зановески=1
+Комната "MyRoom" успешно создана с атрибутами:
+Light State: 0
+Thermostat Temperature: 0 degrees
+Blinds State: 0
+"MyRoom": Температура в комнате установлена 15 градусов
+Текущее состояние команты "MyRoom" : Свет=0, Температура=15, Зановески=0

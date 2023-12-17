@@ -2,17 +2,20 @@
 #define SMART_OBJECTS_H
 
 // Структура для представления состояния объекта
+// typedef struct {
+//     int light_state;
+//     int thermostat_temperature;
+//     int blinds_state;
+// } ObjectState;
+
 typedef struct {
+    char name[50];
     int light_state;
     int thermostat_temperature;
     int blinds_state;
-} ObjectState;
-
-// Структура для представления объекта
-typedef struct {
-    char name[50];
-    ObjectState state;
 } SmartObject;
+
+extern SmartObject* current_object;
 
 // Функции для управления объектами
 SmartObject* create_object(const char* name);

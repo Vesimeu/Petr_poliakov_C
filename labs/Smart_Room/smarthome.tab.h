@@ -61,24 +61,24 @@ extern int yydebug;
     ELSE = 262,                    /* ELSE  */
     TURN_ON = 263,                 /* TURN_ON  */
     TURN_OFF = 264,                /* TURN_OFF  */
-    SET_TEMPERATURE = 265,         /* SET_TEMPERATURE  */
-    SET_VOLUME = 266,              /* SET_VOLUME  */
-    GRANT_ACCESS = 267,            /* GRANT_ACCESS  */
-    CURRENT_TIME = 268,            /* CURRENT_TIME  */
-    SUNRISE_TIME = 269,            /* SUNRISE_TIME  */
-    SUNSET_TIME = 270,             /* SUNSET_TIME  */
-    ID = 271,                      /* ID  */
-    COLON = 272,                   /* COLON  */
-    SEMICOLON = 273,               /* SEMICOLON  */
-    LPAREN = 274,                  /* LPAREN  */
-    RPAREN = 275,                  /* RPAREN  */
-    LBRACE = 276,                  /* LBRACE  */
-    RBRACE = 277,                  /* RBRACE  */
-    EQUAL = 278,                   /* EQUAL  */
-    GREATER = 279,                 /* GREATER  */
-    LESS = 280,                    /* LESS  */
-    COMMA = 281,                   /* COMMA  */
-    DOT = 282,                     /* DOT  */
+    SET_VOLUME = 265,              /* SET_VOLUME  */
+    GRANT_ACCESS = 266,            /* GRANT_ACCESS  */
+    CURRENT_TIME = 267,            /* CURRENT_TIME  */
+    SUNRISE_TIME = 268,            /* SUNRISE_TIME  */
+    SUNSET_TIME = 269,             /* SUNSET_TIME  */
+    ID = 270,                      /* ID  */
+    COLON = 271,                   /* COLON  */
+    SEMICOLON = 272,               /* SEMICOLON  */
+    LPAREN = 273,                  /* LPAREN  */
+    RPAREN = 274,                  /* RPAREN  */
+    LBRACE = 275,                  /* LBRACE  */
+    RBRACE = 276,                  /* RBRACE  */
+    EQUAL = 277,                   /* EQUAL  */
+    GREATER = 278,                 /* GREATER  */
+    LESS = 279,                    /* LESS  */
+    COMMA = 280,                   /* COMMA  */
+    DOT = 281,                     /* DOT  */
+    SET_TEMPERATURE = 282,         /* SET_TEMPERATURE  */
     TURN_ON_LIGHT = 283,           /* TURN_ON_LIGHT  */
     TURN_OFF_LIGHT = 284,          /* TURN_OFF_LIGHT  */
     TURN_ON_BLINDS = 285,          /* TURN_ON_BLINDS  */
@@ -92,14 +92,13 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 29 "smarthome.y"
+#line 30 "smarthome.y"
 
     int intval;
     char* strval;
     SmartObject* objectval;
-    ObjectState stateval;  // Добавляем новый тип для хранения состояния объекта
 
-#line 103 "smarthome.tab.h"
+#line 102 "smarthome.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
