@@ -56,17 +56,17 @@ extern int yydebug;
     YYUNDEF = 257,                 /* "invalid token"  */
     INTEGER = 258,                 /* INTEGER  */
     STRING = 259,                  /* STRING  */
-    CREATE_OBJECT = 260,           /* CREATE_OBJECT  */
-    IF = 261,                      /* IF  */
-    ELSE = 262,                    /* ELSE  */
-    TURN_ON = 263,                 /* TURN_ON  */
-    TURN_OFF = 264,                /* TURN_OFF  */
-    SET_VOLUME = 265,              /* SET_VOLUME  */
-    GRANT_ACCESS = 266,            /* GRANT_ACCESS  */
-    CURRENT_TIME = 267,            /* CURRENT_TIME  */
-    SUNRISE_TIME = 268,            /* SUNRISE_TIME  */
-    SUNSET_TIME = 269,             /* SUNSET_TIME  */
-    ID = 270,                      /* ID  */
+    ID = 260,                      /* ID  */
+    CREATE_OBJECT = 261,           /* CREATE_OBJECT  */
+    IF = 262,                      /* IF  */
+    ELSE = 263,                    /* ELSE  */
+    TURN_ON = 264,                 /* TURN_ON  */
+    TURN_OFF = 265,                /* TURN_OFF  */
+    SET_VOLUME = 266,              /* SET_VOLUME  */
+    GRANT_ACCESS = 267,            /* GRANT_ACCESS  */
+    CURRENT_TIME = 268,            /* CURRENT_TIME  */
+    SUNRISE_TIME = 269,            /* SUNRISE_TIME  */
+    SUNSET_TIME = 270,             /* SUNSET_TIME  */
     COLON = 271,                   /* COLON  */
     SEMICOLON = 272,               /* SEMICOLON  */
     LPAREN = 273,                  /* LPAREN  */
@@ -79,11 +79,12 @@ extern int yydebug;
     COMMA = 280,                   /* COMMA  */
     DOT = 281,                     /* DOT  */
     SET_TEMPERATURE = 282,         /* SET_TEMPERATURE  */
-    TURN_ON_LIGHT = 283,           /* TURN_ON_LIGHT  */
-    TURN_OFF_LIGHT = 284,          /* TURN_OFF_LIGHT  */
-    TURN_ON_BLINDS = 285,          /* TURN_ON_BLINDS  */
-    TURN_OFF_BLINDS = 286,         /* TURN_OFF_BLINDS  */
-    STATUS = 287                   /* STATUS  */
+    PRINT = 283,                   /* PRINT  */
+    TURN_ON_LIGHT = 284,           /* TURN_ON_LIGHT  */
+    TURN_OFF_LIGHT = 285,          /* TURN_OFF_LIGHT  */
+    TURN_ON_BLINDS = 286,          /* TURN_ON_BLINDS  */
+    TURN_OFF_BLINDS = 287,         /* TURN_OFF_BLINDS  */
+    STATUS = 288                   /* STATUS  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -98,7 +99,7 @@ union YYSTYPE
     char* strval;
     SmartObject* objectval;
 
-#line 102 "smarthome.tab.h"
+#line 103 "smarthome.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

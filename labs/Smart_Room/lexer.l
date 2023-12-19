@@ -25,9 +25,12 @@ struct SmartObject;
 "current_time"         { return CURRENT_TIME; }
 "sunrise_time"         { return SUNRISE_TIME; }
 "sunset_time"          { return SUNSET_TIME; }
+"print"                 { return PRINT; }
 "("          { return LPAREN; }
 ")"          { return RPAREN; }
 ";"                   { return SEMICOLON; }
+[a-zA-Z_][a-zA-Z0-9_]*    { yylval.strval = strdup(yytext); return ID; }
+
 [ \t\n]                ;
 .               { return DOT; }
 
@@ -36,4 +39,3 @@ struct SmartObject;
 int yywrap() {
     return 1;
 }
-

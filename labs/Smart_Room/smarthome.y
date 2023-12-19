@@ -35,12 +35,12 @@ void yyerror(const char* s);
 
 
 %token <intval> INTEGER 
-%token <strval> STRING
+%token <strval> STRING ID
 %token <objectval> CREATE_OBJECT IF ELSE TURN_ON TURN_OFF SET_VOLUME GRANT_ACCESS CURRENT_TIME SUNRISE_TIME SUNSET_TIME 
-%token ID COLON SEMICOLON LPAREN RPAREN LBRACE RBRACE EQUAL GREATER LESS COMMA DOT SET_TEMPERATURE 
+%token COLON SEMICOLON LPAREN RPAREN LBRACE RBRACE EQUAL GREATER LESS COMMA DOT SET_TEMPERATURE PRINT
 %token <strval> TURN_ON_LIGHT TURN_OFF_LIGHT TURN_ON_BLINDS TURN_OFF_BLINDS STATUS
 
-%type <intval> expression SET_TEMPERATURE 
+%type <intval> expression SET_TEMPERATURE  attribute 
 %type <strval> object attribute_name
 %type <objectval> create_object_statement light_command blinds_command status_command
 
@@ -60,7 +60,8 @@ statement: create_object_statement SEMICOLON
          | light_command SEMICOLON         // Добавляем новую команду для управления светом
          | blinds_command SEMICOLON  
          | status_command SEMICOLON 
-         | set_temperature_statement SEMICOLON      
+         | set_temperature_statement SEMICOLON    
+         | print_statement SEMICOLON  
          ;
 // Вместо того чтобы использовать $1 в качестве значения атрибута объекта, создайте новый объект с использованием текущего объекта, а затем обновите текущий объект.
 create_object_statement: CREATE_OBJECT STRING { $$ = create_object($2); current_object = $$; }
@@ -84,6 +85,8 @@ status_command: object DOT STATUS LPAREN RPAREN { print_object_state(current_obj
 // Обновим команду для вызова метода объекта
 expression_statement: object DOT attribute_name LPAREN argument_list RPAREN SEMICOLON { turn_on_light(current_object); }
                   ;
+print_statement: PRINT LPAREN attribute RPAREN { print_attribute($3); }
+;
 
 if_else_statement: IF LPAREN expression RPAREN LBRACE statement_list RBRACE
                  | IF LPAREN expression RPAREN LBRACE statement_list RBRACE ELSE LBRACE statement_list RBRACE
@@ -101,6 +104,7 @@ expression: INTEGER
           | expression EQUAL expression
           | expression GREATER expression
           | expression LESS expression
+          | attribute { $$ = $1; } 
           ;
 
 time_expression: CURRENT_TIME
@@ -113,6 +117,9 @@ object: STRING { $$ = $1; }
       
 attribute_name: ID
               ;
+
+attribute: object DOT ID { $$ = get_attribute_value(current_object, $3); }
+;
 
 // command_result: INTEGER  { $$ = $1; }
 //              | STRING   { $$ = strdup($1); }

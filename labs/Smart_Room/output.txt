@@ -1,14 +1,9 @@
-Комната "living_room" успешно создана с атрибутами:
+Комната "LivingRoom" успешно создана с атрибутами:
 Light State: 0
 Thermostat Temperature: 0 degrees
 Blinds State: 0
-"living_room": Свет включен!
-"living_room": Blinds turned on
-"living_room": Температура в комнате установлена 25 градусов
-Текущее состояние команты "living_room" : Свет=1, Температура=25, Зановески=1
-Комната "MyRoom" успешно создана с атрибутами:
-Light State: 0
-Thermostat Temperature: 0 degrees
-Blinds State: 0
-"MyRoom": Температура в комнате установлена 15 градусов
-Текущее состояние команты "MyRoom" : Свет=0, Температура=15, Зановески=0
+"LivingRoom": Свет включен!
+1
+"LivingRoom": Температура в комнате установлена 25 градусов
+25
+Текущее состояние команты "LivingRoom" : Свет=1, Температура=25, Зановески=0

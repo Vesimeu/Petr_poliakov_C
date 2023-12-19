@@ -1,9 +1,6 @@
-create_object "living_room";
-"living_room".turn_on_light();
-"living_room".turn_on_blinds();
-"living_room".set_temperature(25);
-"living_room".status();
-
-create_object "MyRoom";
-"MyRoom".set_temperature(15);
-"MyRoom".status();
+create_object "LivingRoom";
+"LivingRoom".turn_on_light();
+print("LivingRoom".light_state);
+"LightRoom".set_temperature(25);
+print("LightRoom".temperature);
+"LivingRoom".status();
