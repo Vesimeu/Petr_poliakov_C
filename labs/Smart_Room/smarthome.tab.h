@@ -55,36 +55,36 @@ extern int yydebug;
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
     INTEGER = 258,                 /* INTEGER  */
-    STRING = 259,                  /* STRING  */
-    ID = 260,                      /* ID  */
-    CREATE_OBJECT = 261,           /* CREATE_OBJECT  */
-    IF = 262,                      /* IF  */
-    ELSE = 263,                    /* ELSE  */
-    TURN_ON = 264,                 /* TURN_ON  */
-    TURN_OFF = 265,                /* TURN_OFF  */
-    SET_VOLUME = 266,              /* SET_VOLUME  */
-    GRANT_ACCESS = 267,            /* GRANT_ACCESS  */
-    CURRENT_TIME = 268,            /* CURRENT_TIME  */
-    SUNRISE_TIME = 269,            /* SUNRISE_TIME  */
-    SUNSET_TIME = 270,             /* SUNSET_TIME  */
-    COLON = 271,                   /* COLON  */
-    SEMICOLON = 272,               /* SEMICOLON  */
-    LPAREN = 273,                  /* LPAREN  */
-    RPAREN = 274,                  /* RPAREN  */
-    LBRACE = 275,                  /* LBRACE  */
-    RBRACE = 276,                  /* RBRACE  */
-    EQUAL = 277,                   /* EQUAL  */
-    GREATER = 278,                 /* GREATER  */
-    LESS = 279,                    /* LESS  */
-    COMMA = 280,                   /* COMMA  */
-    DOT = 281,                     /* DOT  */
-    SET_TEMPERATURE = 282,         /* SET_TEMPERATURE  */
-    PRINT = 283,                   /* PRINT  */
-    TURN_ON_LIGHT = 284,           /* TURN_ON_LIGHT  */
-    TURN_OFF_LIGHT = 285,          /* TURN_OFF_LIGHT  */
-    TURN_ON_BLINDS = 286,          /* TURN_ON_BLINDS  */
-    TURN_OFF_BLINDS = 287,         /* TURN_OFF_BLINDS  */
-    STATUS = 288                   /* STATUS  */
+    CREATE_OBJECT = 259,           /* CREATE_OBJECT  */
+    IF = 260,                      /* IF  */
+    ELSE = 261,                    /* ELSE  */
+    TURN_ON = 262,                 /* TURN_ON  */
+    TURN_OFF = 263,                /* TURN_OFF  */
+    SET_VOLUME = 264,              /* SET_VOLUME  */
+    GRANT_ACCESS = 265,            /* GRANT_ACCESS  */
+    CURRENT_TIME = 266,            /* CURRENT_TIME  */
+    SUNRISE_TIME = 267,            /* SUNRISE_TIME  */
+    SUNSET_TIME = 268,             /* SUNSET_TIME  */
+    COLON = 269,                   /* COLON  */
+    SEMICOLON = 270,               /* SEMICOLON  */
+    LPAREN = 271,                  /* LPAREN  */
+    RPAREN = 272,                  /* RPAREN  */
+    LBRACE = 273,                  /* LBRACE  */
+    RBRACE = 274,                  /* RBRACE  */
+    COMMA = 275,                   /* COMMA  */
+    DOT = 276,                     /* DOT  */
+    SET_TEMPERATURE = 277,         /* SET_TEMPERATURE  */
+    PRINT = 278,                   /* PRINT  */
+    TURN_ON_LIGHT = 279,           /* TURN_ON_LIGHT  */
+    TURN_OFF_LIGHT = 280,          /* TURN_OFF_LIGHT  */
+    TURN_ON_BLINDS = 281,          /* TURN_ON_BLINDS  */
+    TURN_OFF_BLINDS = 282,         /* TURN_OFF_BLINDS  */
+    STATUS = 283,                  /* STATUS  */
+    GREATER = 284,                 /* GREATER  */
+    LESS = 285,                    /* LESS  */
+    EQUAL = 286,                   /* EQUAL  */
+    STRING = 287,                  /* STRING  */
+    ID = 288                       /* ID  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -98,8 +98,11 @@ union YYSTYPE
     int intval;
     char* strval;
     SmartObject* objectval;
+    Condition* conditionval; // Добавьте эту строку
+    BlockFunction* blocklistval;
+    
 
-#line 103 "smarthome.tab.h"
+#line 106 "smarthome.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

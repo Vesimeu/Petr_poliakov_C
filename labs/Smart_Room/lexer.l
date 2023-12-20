@@ -26,8 +26,13 @@ struct SmartObject;
 "sunrise_time"         { return SUNRISE_TIME; }
 "sunset_time"          { return SUNSET_TIME; }
 "print"                 { return PRINT; }
-"("          { return LPAREN; }
-")"          { return RPAREN; }
+"("      { return LPAREN; }
+")"         { return RPAREN; }
+"{"         { return LBRACE; }
+"}"         { return RBRACE; }
+">"          { yylval.strval = strdup(yytext); return GREATER; }
+"<"         { yylval.strval = strdup(yytext); return LESS; }
+"=="        {  yylval.strval = strdup(yytext); return EQUAL; }
 ";"                   { return SEMICOLON; }
 [a-zA-Z_][a-zA-Z0-9_]*    { yylval.strval = strdup(yytext); return ID; }
 

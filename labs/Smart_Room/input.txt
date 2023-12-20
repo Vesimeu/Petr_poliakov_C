@@ -1,6 +1,14 @@
-create_object "LivingRoom";
-"LivingRoom".turn_on_light();
-print("LivingRoom".light_state);
-"LightRoom".set_temperature(25);
-print("LightRoom".temperature);
+create_object "LivingRoom1";
+create_object "LivingRoom2";
+"LivingRoom1".set_temperature(23);
+"LivingRoom2".set_temperature(15);
+"LivingRoom1".turn_on_light();
+print("LivingRoom1".temperature);
+"LivingRoom1".status();
+if ("LivingRoom1".temperature == 23) { 
+    "LivingRoom1".turn_off_light();
+    "LivingRoom1".set_temperature(20);
+    "LivingRoom2".set_temperature(20);
+}
+
 "LivingRoom".status();
