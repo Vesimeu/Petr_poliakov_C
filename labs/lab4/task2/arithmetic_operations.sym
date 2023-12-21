@@ -1,0 +1,9 @@
+// Symbol table
+// Scope level 0:
+//	Symbol Name       Page Address
+//	----------------  ------------
+//	MUL_LOOP          3008
+//	DONE_MUL          300C
+//	NUMBER1           300D
+//	NUMBER2           300E
+

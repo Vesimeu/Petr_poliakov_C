@@ -15,7 +15,7 @@ extern char* yytext;
 
 struct SmartObject;
 SmartObject* current_object = NULL;  // Добавим переменную для хранения объекта
-
+CommandList* current_command_list = NULL; // Добавим переменную для хранения текущего списка команд
 void yyerror(const char* s);
 
 %}
@@ -45,7 +45,7 @@ void yyerror(const char* s);
 
 %type <intval> expression SET_TEMPERATURE  attribute argument_list
 %type <strval> attribute_name relation_operator
-%type <objectval> create_object_statement light_command blinds_command status_command object expression_statement
+%type <objectval> create_object_statement light_command blinds_command status_command object expression_statement light_command_defolt
 %type <conditionval> condition
 %type <blocklistval> statement_list
 %%
@@ -56,25 +56,32 @@ program: statement_list
 statement_list: statement
               | statement_list statement
               ;
+statement_list_def: statement_def
+              | statement_list_def statement_def
+              ;       
 
 statement: create_object_statement SEMICOLON 
          | expression_statement SEMICOLON
-         | light_command SEMICOLON         // Добавляем новую команду для управления светом
+         | light_command SEMICOLON      // Добавляем новую команду для управления светом
          | blinds_command SEMICOLON  
          | status_command SEMICOLON 
          | set_temperature_statement SEMICOLON    
          | print_statement SEMICOLON 
          | if_else_statement 
          ;
-         
+statement_def : light_command_defolt SEMICOLON | set_temperature_statement SEMICOLON   ;
 // Вместо того чтобы использовать $1 в качестве значения атрибута объекта, создайте новый объект с использованием текущего объекта, а затем обновите текущий объект.
 create_object_statement: CREATE_OBJECT STRING { $$ = create_object($2); current_object = $$; }
 ;
 
 // Обновим команды для управления светом
+light_command_defolt: object DOT TURN_ON_LIGHT LPAREN RPAREN { turn_on_light(current_object); }
+            | object DOT TURN_OFF_LIGHT LPAREN RPAREN { turn_off_light(current_object); }
+            ;  
+            
 light_command: object DOT TURN_ON_LIGHT LPAREN RPAREN { add_command_to_list(turn_on_light, current_object); }
             | object DOT TURN_OFF_LIGHT LPAREN RPAREN { add_command_to_list(turn_off_light, current_object); }
-            ;
+            ;        
 
 blinds_command: object DOT TURN_ON_BLINDS LPAREN RPAREN { add_command_to_list(turn_on_blinds, get_object($1)); }
              | object DOT TURN_OFF_BLINDS LPAREN RPAREN { add_command_to_list(turn_off_blinds, get_object($1)); }
@@ -111,13 +118,13 @@ relation_operator: GREATER
                 ;
 
 
-if_else_statement: IF condition LBRACE statement_list RBRACE
+if_else_statement: IF condition LBRACE statement_list_def RBRACE
 {
     if (evaluate_condition($2)) {
         execute_command_list();
     }
 }
-| IF condition LBRACE statement_list RBRACE ELSE LBRACE statement_list RBRACE
+| IF condition LBRACE statement_list RBRACE ELSE LBRACE statement_list_def RBRACE
 {
     if (evaluate_condition($2)) {
         execute_command_list();

@@ -261,7 +261,16 @@ void execute_block_list(BlockFunction* block_list) {
     }
 }
 
-
+CommandList* create_command_list() {
+    CommandList* list = (CommandList*)malloc(sizeof(CommandList));
+    if (list == NULL) {
+        fprintf(stderr, "Error: Memory allocation failed for CommandList\n");
+        exit(EXIT_FAILURE);
+    }
+    list->commands = NULL;
+    list->count = 0;
+    return list;
+}
 
 Condition* create_condition_object(const char* object_name) {
     // Реализуйте создание условия для объекта

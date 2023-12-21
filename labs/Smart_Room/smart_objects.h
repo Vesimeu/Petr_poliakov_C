@@ -24,6 +24,11 @@ typedef struct Command {
     int arg;                            // Аргумент для команды
 } Command;
 
+typedef struct CommandList {
+    Command* commands; // Массив команд
+    int count; // Количество команд в списке
+} CommandList;
+
 
 typedef struct {
     SmartObject* object;      // Указатель на объект (если требуется)

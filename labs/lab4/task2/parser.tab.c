@@ -67,29 +67,18 @@
 
 
 /* First part of user prologue.  */
-#line 1 "smarthome.y"
+#line 1 "parser.y"
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "smart_objects.h"
-#include <string.h>
-#include "smarthome.tab.h"
 
-// #define YYSTYPE_IS_DECLARED 1
-// #define YYSTYPE_IS_TRIVIAL 1
+void yyerror(char *s) {
+    fprintf(stderr, "error: %s\n", s);
+}
 
-extern FILE* yyin;
-extern int yylex();
-extern char* yytext;
+int yylex(void);
 
-
-struct SmartObject;
-SmartObject* current_object = NULL;  // Добавим переменную для хранения объекта
-CommandList* current_command_list = NULL; // Добавим переменную для хранения текущего списка команд
-void yyerror(const char* s);
-
-
-#line 93 "smarthome.tab.c"
+#line 82 "parser.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -112,7 +101,7 @@ void yyerror(const char* s);
 #  endif
 # endif
 
-#include "smarthome.tab.h"
+#include "parser.tab.h"
 /* Symbol kind.  */
 enum yysymbol_kind_t
 {
@@ -120,60 +109,16 @@ enum yysymbol_kind_t
   YYSYMBOL_YYEOF = 0,                      /* "end of file"  */
   YYSYMBOL_YYerror = 1,                    /* error  */
   YYSYMBOL_YYUNDEF = 2,                    /* "invalid token"  */
-  YYSYMBOL_INTEGER = 3,                    /* INTEGER  */
-  YYSYMBOL_CREATE_OBJECT = 4,              /* CREATE_OBJECT  */
-  YYSYMBOL_IF = 5,                         /* IF  */
-  YYSYMBOL_ELSE = 6,                       /* ELSE  */
-  YYSYMBOL_TURN_ON = 7,                    /* TURN_ON  */
-  YYSYMBOL_TURN_OFF = 8,                   /* TURN_OFF  */
-  YYSYMBOL_SET_VOLUME = 9,                 /* SET_VOLUME  */
-  YYSYMBOL_GRANT_ACCESS = 10,              /* GRANT_ACCESS  */
-  YYSYMBOL_CURRENT_TIME = 11,              /* CURRENT_TIME  */
-  YYSYMBOL_SUNRISE_TIME = 12,              /* SUNRISE_TIME  */
-  YYSYMBOL_SUNSET_TIME = 13,               /* SUNSET_TIME  */
-  YYSYMBOL_COLON = 14,                     /* COLON  */
-  YYSYMBOL_SEMICOLON = 15,                 /* SEMICOLON  */
-  YYSYMBOL_LPAREN = 16,                    /* LPAREN  */
-  YYSYMBOL_RPAREN = 17,                    /* RPAREN  */
-  YYSYMBOL_LBRACE = 18,                    /* LBRACE  */
-  YYSYMBOL_RBRACE = 19,                    /* RBRACE  */
-  YYSYMBOL_COMMA = 20,                     /* COMMA  */
-  YYSYMBOL_DOT = 21,                       /* DOT  */
-  YYSYMBOL_SET_TEMPERATURE = 22,           /* SET_TEMPERATURE  */
-  YYSYMBOL_PRINT = 23,                     /* PRINT  */
-  YYSYMBOL_TURN_ON_LIGHT = 24,             /* TURN_ON_LIGHT  */
-  YYSYMBOL_TURN_OFF_LIGHT = 25,            /* TURN_OFF_LIGHT  */
-  YYSYMBOL_TURN_ON_BLINDS = 26,            /* TURN_ON_BLINDS  */
-  YYSYMBOL_TURN_OFF_BLINDS = 27,           /* TURN_OFF_BLINDS  */
-  YYSYMBOL_STATUS = 28,                    /* STATUS  */
-  YYSYMBOL_GREATER = 29,                   /* GREATER  */
-  YYSYMBOL_LESS = 30,                      /* LESS  */
-  YYSYMBOL_EQUAL = 31,                     /* EQUAL  */
-  YYSYMBOL_STRING = 32,                    /* STRING  */
-  YYSYMBOL_ID = 33,                        /* ID  */
-  YYSYMBOL_YYACCEPT = 34,                  /* $accept  */
-  YYSYMBOL_program = 35,                   /* program  */
-  YYSYMBOL_statement_list = 36,            /* statement_list  */
-  YYSYMBOL_statement_list_def = 37,        /* statement_list_def  */
-  YYSYMBOL_statement = 38,                 /* statement  */
-  YYSYMBOL_statement_def = 39,             /* statement_def  */
-  YYSYMBOL_create_object_statement = 40,   /* create_object_statement  */
-  YYSYMBOL_light_command_defolt = 41,      /* light_command_defolt  */
-  YYSYMBOL_light_command = 42,             /* light_command  */
-  YYSYMBOL_blinds_command = 43,            /* blinds_command  */
-  YYSYMBOL_set_temperature_statement = 44, /* set_temperature_statement  */
-  YYSYMBOL_status_command = 45,            /* status_command  */
-  YYSYMBOL_expression_statement = 46,      /* expression_statement  */
-  YYSYMBOL_print_statement = 47,           /* print_statement  */
-  YYSYMBOL_condition = 48,                 /* condition  */
-  YYSYMBOL_relation_operator = 49,         /* relation_operator  */
-  YYSYMBOL_if_else_statement = 50,         /* if_else_statement  */
-  YYSYMBOL_argument_list = 51,             /* argument_list  */
-  YYSYMBOL_expression = 52,                /* expression  */
-  YYSYMBOL_time_expression = 53,           /* time_expression  */
-  YYSYMBOL_object = 54,                    /* object  */
-  YYSYMBOL_attribute_name = 55,            /* attribute_name  */
-  YYSYMBOL_attribute = 56                  /* attribute  */
+  YYSYMBOL_NUMBER = 3,                     /* NUMBER  */
+  YYSYMBOL_PLUS = 4,                       /* PLUS  */
+  YYSYMBOL_MINUS = 5,                      /* MINUS  */
+  YYSYMBOL_MULT = 6,                       /* MULT  */
+  YYSYMBOL_LPAREN = 7,                     /* LPAREN  */
+  YYSYMBOL_RPAREN = 8,                     /* RPAREN  */
+  YYSYMBOL_YYACCEPT = 9,                   /* $accept  */
+  YYSYMBOL_expression = 10,                /* expression  */
+  YYSYMBOL_term = 11,                      /* term  */
+  YYSYMBOL_factor = 12                     /* factor  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -499,21 +444,21 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  21
+#define YYFINAL  7
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   125
+#define YYLAST   12
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  34
+#define YYNTOKENS  9
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  23
+#define YYNNTS  4
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  47
+#define YYNRULES  8
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  119
+#define YYNSTATES  15
 
 /* YYMAXUTOK -- Last valid token kind.  */
-#define YYMAXUTOK   288
+#define YYMAXUTOK   263
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
@@ -553,20 +498,14 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
-      15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
-      25,    26,    27,    28,    29,    30,    31,    32,    33
+       5,     6,     7,     8
 };
 
 #if YYDEBUG
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
-static const yytype_uint8 yyrline[] =
+static const yytype_int8 yyrline[] =
 {
-       0,    53,    53,    56,    57,    59,    60,    63,    64,    65,
-      66,    67,    68,    69,    70,    72,    72,    74,    78,    79,
-      82,    83,    86,    87,    91,    94,    98,   104,   107,   115,
-     116,   117,   121,   127,   139,   140,   143,   144,   145,   146,
-     147,   148,   151,   152,   153,   156,   159,   162
+       0,    23,    23,    24,    25,    29,    30,    34,    35
 };
 #endif
 
@@ -582,19 +521,9 @@ static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "\"end of file\"", "error", "\"invalid token\"", "INTEGER",
-  "CREATE_OBJECT", "IF", "ELSE", "TURN_ON", "TURN_OFF", "SET_VOLUME",
-  "GRANT_ACCESS", "CURRENT_TIME", "SUNRISE_TIME", "SUNSET_TIME", "COLON",
-  "SEMICOLON", "LPAREN", "RPAREN", "LBRACE", "RBRACE", "COMMA", "DOT",
-  "SET_TEMPERATURE", "PRINT", "TURN_ON_LIGHT", "TURN_OFF_LIGHT",
-  "TURN_ON_BLINDS", "TURN_OFF_BLINDS", "STATUS", "GREATER", "LESS",
-  "EQUAL", "STRING", "ID", "$accept", "program", "statement_list",
-  "statement_list_def", "statement", "statement_def",
-  "create_object_statement", "light_command_defolt", "light_command",
-  "blinds_command", "set_temperature_statement", "status_command",
-  "expression_statement", "print_statement", "condition",
-  "relation_operator", "if_else_statement", "argument_list", "expression",
-  "time_expression", "object", "attribute_name", "attribute", YY_NULLPTR
+  "\"end of file\"", "error", "\"invalid token\"", "NUMBER", "PLUS",
+  "MINUS", "MULT", "LPAREN", "RPAREN", "$accept", "expression", "term",
+  "factor", YY_NULLPTR
 };
 
 static const char *
@@ -604,12 +533,12 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-56)
+#define YYPACT_NINF (-6)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
 
-#define YYTABLE_NINF (-47)
+#define YYTABLE_NINF (-1)
 
 #define yytable_value_is_error(Yyn) \
   0
@@ -618,18 +547,8 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-       7,   -15,     6,    10,   -56,    21,     7,   -56,    16,    17,
-      33,    44,    45,    46,    47,   -56,    12,   -56,     2,    52,
-      39,   -56,   -56,   -56,   -56,   -56,   -56,   -56,   -56,   -56,
-      18,   -56,   -56,   -56,   -56,   -56,   -56,    23,   -56,    54,
-     -56,     7,    55,    56,    61,    62,    63,    64,    65,    66,
-     -56,    67,   -56,   -56,   -56,     2,    53,     4,    -3,   -56,
-      70,    72,    68,    57,   -56,    85,    74,    75,    76,    77,
-      78,     2,    79,    81,    82,    93,   -56,   -56,    86,    83,
-     -56,   -56,    41,   -56,    88,   -56,   -56,   -56,   -56,   -56,
-     -10,   -56,   -56,     2,    84,   -56,    25,    90,    91,   -56,
-      94,     2,     8,    39,    92,    96,    97,    98,   -56,   -56,
-     -56,     5,    99,   100,   -56,   -56,   -56,   -56,   -56
+       4,    -6,     4,     0,    -5,    -6,    -2,    -6,     4,     4,
+       4,    -6,    -5,    -5,    -6
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -637,34 +556,20 @@ static const yytype_int8 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,     0,     0,     0,    45,     0,     2,     3,     0,     0,
-       0,     0,     0,     0,     0,    14,     0,    17,     0,     0,
-       0,     1,     4,     7,     9,    10,    12,    11,     8,    13,
-       0,    36,    42,    43,    44,    37,    41,     0,    38,     0,
-      40,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-      46,     0,    29,    30,    31,     0,     0,     0,     0,     5,
-       0,     0,     0,     0,    27,     0,     0,     0,     0,     0,
-       0,     0,     0,    47,     0,     0,    32,     6,     0,     0,
-      15,    12,     0,    47,     0,    20,    21,    22,    23,    25,
-       0,    34,    28,     0,     0,    16,     0,     0,     0,    24,
-       0,     0,     0,     0,     0,     0,     0,     0,    26,    35,
-      39,     0,     0,     0,    18,    19,    33,    18,    19
+       0,     7,     0,     0,     4,     6,     0,     1,     0,     0,
+       0,     8,     2,     3,     5
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -56,   -56,    59,    15,    -2,   -55,   -56,   -56,   -56,   -56,
-     -39,   -56,   -56,   -56,   108,   -56,   -56,    20,   -17,   -56,
-       0,    69,   101
+      -6,     6,     1,     2
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     5,     6,    58,     7,    59,     8,    60,     9,    10,
-      11,    12,    13,    14,    36,    55,    15,    90,    91,    38,
-      39,    51,    40
+       0,     3,     4,     5
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -672,74 +577,34 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      16,    37,    61,    77,    22,    31,    16,   100,     1,     2,
-     101,     1,     2,    32,    33,    34,    76,    17,    18,    78,
-      42,    21,    18,    75,   116,   110,    20,     3,   101,     4,
-       3,    23,    24,    30,     4,    35,     4,     4,    72,     4,
-      44,    62,    45,    46,    47,    48,    49,    44,    25,   104,
-     105,    50,    52,    53,    54,    22,    77,    16,    79,    26,
-      27,    28,    29,    44,    78,    97,    98,    47,    48,    49,
-      41,     4,    78,    64,    50,    56,    63,    65,    66,    67,
-      68,    69,    70,    71,   109,    80,    73,    81,    84,    82,
-      83,    85,    86,    87,    88,    89,    92,   -46,    93,    94,
-      57,    95,   103,    79,    96,    99,   106,   107,   112,   108,
-      19,    79,   113,   102,   114,   115,   117,   118,   111,     0,
-       0,    43,     0,     0,     0,    74
+       7,    10,     8,     9,     8,     9,    11,     1,     6,    12,
+      13,     2,    14
 };
 
 static const yytype_int8 yycheck[] =
 {
-       0,    18,    41,    58,     6,     3,     6,    17,     4,     5,
-      20,     4,     5,    11,    12,    13,    19,    32,    16,    58,
-      20,     0,    16,    19,    19,    17,    16,    23,    20,    32,
-      23,    15,    15,    21,    32,    33,    32,    32,    55,    32,
-      22,    41,    24,    25,    26,    27,    28,    22,    15,    24,
-      25,    33,    29,    30,    31,    57,   111,    57,    58,    15,
-      15,    15,    15,    22,   103,    24,    25,    26,    27,    28,
-      18,    32,   111,    17,    33,    21,    21,    16,    16,    16,
-      16,    16,    16,    16,   101,    15,    33,    15,     3,    21,
-      33,    17,    17,    17,    17,    17,    17,    16,    16,     6,
-      41,    15,    18,   103,    21,    17,    16,    16,    16,    15,
-       2,   111,    16,    93,    17,    17,    17,    17,   103,    -1,
-      -1,    20,    -1,    -1,    -1,    56
+       0,     6,     4,     5,     4,     5,     8,     3,     2,     8,
+       9,     7,    10
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     4,     5,    23,    32,    35,    36,    38,    40,    42,
-      43,    44,    45,    46,    47,    50,    54,    32,    16,    48,
-      16,     0,    38,    15,    15,    15,    15,    15,    15,    15,
-      21,     3,    11,    12,    13,    33,    48,    52,    53,    54,
-      56,    18,    54,    56,    22,    24,    25,    26,    27,    28,
-      33,    55,    29,    30,    31,    49,    21,    36,    37,    39,
-      41,    44,    54,    21,    17,    16,    16,    16,    16,    16,
-      16,    16,    52,    33,    55,    19,    19,    39,    44,    54,
-      15,    15,    21,    33,     3,    17,    17,    17,    17,    17,
-      51,    52,    17,    16,     6,    15,    21,    24,    25,    17,
-      17,    20,    51,    18,    24,    25,    16,    16,    15,    52,
-      17,    37,    16,    16,    17,    17,    19,    17,    17
+       0,     3,     7,    10,    11,    12,    10,     0,     4,     5,
+       6,     8,    11,    11,    12
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    34,    35,    36,    36,    37,    37,    38,    38,    38,
-      38,    38,    38,    38,    38,    39,    39,    40,    41,    41,
-      42,    42,    43,    43,    44,    45,    46,    47,    48,    49,
-      49,    49,    50,    50,    51,    51,    52,    52,    52,    52,
-      52,    52,    53,    53,    53,    54,    55,    56
+       0,     9,    10,    10,    10,    11,    11,    12,    12
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     1,     1,     2,     1,     2,     2,     2,     2,
-       2,     2,     2,     2,     1,     2,     2,     2,     5,     5,
-       5,     5,     5,     5,     6,     5,     7,     4,     5,     1,
-       1,     1,     5,     9,     1,     3,     1,     1,     1,     6,
-       1,     1,     1,     1,     1,     1,     1,     3
+       0,     2,     3,     3,     1,     3,     1,     1,     3
 };
 
 
@@ -1115,7 +980,7 @@ yybackup:
   if (yychar == YYEMPTY)
     {
       YYDPRINTF ((stderr, "Reading a token\n"));
-      yychar = yylex (yylval);
+      yychar = yylex ();
     }
 
   if (yychar <= YYEOF)
@@ -1202,124 +1067,50 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-  case 17: /* create_object_statement: CREATE_OBJECT STRING  */
-#line 74 "smarthome.y"
-                                              { (yyval.objectval) = create_object((yyvsp[0].strval)); current_object = (yyval.objectval); }
-#line 1209 "smarthome.tab.c"
+  case 2: /* expression: expression PLUS term  */
+#line 23 "parser.y"
+                             { printf("ADD R0, R0, R1\n"); }
+#line 1074 "parser.tab.c"
     break;
 
-  case 18: /* light_command_defolt: object DOT TURN_ON_LIGHT LPAREN RPAREN  */
-#line 78 "smarthome.y"
-                                                             { turn_on_light(current_object); }
-#line 1215 "smarthome.tab.c"
+  case 3: /* expression: expression MINUS term  */
+#line 24 "parser.y"
+                             { printf("SUB R0, R0, R1\n"); }
+#line 1080 "parser.tab.c"
     break;
 
-  case 19: /* light_command_defolt: object DOT TURN_OFF_LIGHT LPAREN RPAREN  */
-#line 79 "smarthome.y"
-                                                      { turn_off_light(current_object); }
-#line 1221 "smarthome.tab.c"
+  case 4: /* expression: term  */
+#line 25 "parser.y"
+                             { /* ничего не делать */ }
+#line 1086 "parser.tab.c"
     break;
 
-  case 20: /* light_command: object DOT TURN_ON_LIGHT LPAREN RPAREN  */
-#line 82 "smarthome.y"
-                                                      { add_command_to_list(turn_on_light, current_object); }
-#line 1227 "smarthome.tab.c"
+  case 5: /* term: term MULT factor  */
+#line 29 "parser.y"
+                             { printf("MUL R1, R1, R2\n"); }
+#line 1092 "parser.tab.c"
     break;
 
-  case 21: /* light_command: object DOT TURN_OFF_LIGHT LPAREN RPAREN  */
-#line 83 "smarthome.y"
-                                                      { add_command_to_list(turn_off_light, current_object); }
-#line 1233 "smarthome.tab.c"
+  case 6: /* term: factor  */
+#line 30 "parser.y"
+                             { /* ничего не делать */ }
+#line 1098 "parser.tab.c"
     break;
 
-  case 22: /* blinds_command: object DOT TURN_ON_BLINDS LPAREN RPAREN  */
-#line 86 "smarthome.y"
-                                                        { add_command_to_list(turn_on_blinds, get_object((yyvsp[-4].objectval))); }
-#line 1239 "smarthome.tab.c"
+  case 7: /* factor: NUMBER  */
+#line 34 "parser.y"
+                             { printf("LOAD R2, #%d\n", (yyvsp[0].num)); }
+#line 1104 "parser.tab.c"
     break;
 
-  case 23: /* blinds_command: object DOT TURN_OFF_BLINDS LPAREN RPAREN  */
-#line 87 "smarthome.y"
-                                                        { add_command_to_list(turn_off_blinds, get_object((yyvsp[-4].objectval))); }
-#line 1245 "smarthome.tab.c"
-    break;
-
-  case 24: /* set_temperature_statement: object DOT SET_TEMPERATURE LPAREN INTEGER RPAREN  */
-#line 91 "smarthome.y"
-                                                                            { set_temperature(current_object, (yyvsp[-1].intval)); }
-#line 1251 "smarthome.tab.c"
-    break;
-
-  case 25: /* status_command: object DOT STATUS LPAREN RPAREN  */
-#line 94 "smarthome.y"
-                                                { add_command_to_list(print_object_state, current_object); }
-#line 1257 "smarthome.tab.c"
-    break;
-
-  case 26: /* expression_statement: object DOT attribute_name LPAREN argument_list RPAREN SEMICOLON  */
-#line 99 "smarthome.y"
-{
-    execute_method((yyvsp[-6].objectval), (yyvsp[-4].strval), (yyvsp[-2].intval)); // Выполняем метод объекта
-}
-#line 1265 "smarthome.tab.c"
-    break;
-
-  case 27: /* print_statement: PRINT LPAREN attribute RPAREN  */
-#line 104 "smarthome.y"
-                                               { print_attribute((yyvsp[-1].intval)); }
-#line 1271 "smarthome.tab.c"
-    break;
-
-  case 28: /* condition: LPAREN expression relation_operator expression RPAREN  */
-#line 108 "smarthome.y"
-  {
-    (yyval.conditionval) = create_condition((yyvsp[-3].intval), (yyvsp[-2].strval), (yyvsp[-1].intval));
-  }
-#line 1279 "smarthome.tab.c"
-    break;
-
-  case 32: /* if_else_statement: IF condition LBRACE statement_list_def RBRACE  */
-#line 122 "smarthome.y"
-{
-    if (evaluate_condition((yyvsp[-3].conditionval))) {
-        execute_command_list();
-    }
-}
-#line 1289 "smarthome.tab.c"
-    break;
-
-  case 33: /* if_else_statement: IF condition LBRACE statement_list RBRACE ELSE LBRACE statement_list_def RBRACE  */
-#line 128 "smarthome.y"
-{
-    if (evaluate_condition((yyvsp[-7].conditionval))) {
-        execute_command_list();
-    } else {
-        execute_command_list();
-    }
-}
-#line 1301 "smarthome.tab.c"
-    break;
-
-  case 39: /* expression: object DOT attribute_name LPAREN argument_list RPAREN  */
-#line 146 "smarthome.y"
-                                                                  { (yyval.intval) = (SmartObject*)(yyvsp[-5].objectval); }
-#line 1307 "smarthome.tab.c"
-    break;
-
-  case 45: /* object: STRING  */
-#line 156 "smarthome.y"
-               { (yyval.objectval) = get_object((yyvsp[0].strval)); }
-#line 1313 "smarthome.tab.c"
-    break;
-
-  case 47: /* attribute: object DOT ID  */
-#line 162 "smarthome.y"
-                         { (yyval.intval) = get_attribute_value(current_object, (yyvsp[0].strval)); }
-#line 1319 "smarthome.tab.c"
+  case 8: /* factor: LPAREN expression RPAREN  */
+#line 35 "parser.y"
+                               { /* ничего не делать */ }
+#line 1110 "parser.tab.c"
     break;
 
 
-#line 1323 "smarthome.tab.c"
+#line 1114 "parser.tab.c"
 
       default: break;
     }
@@ -1512,34 +1303,5 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 169 "smarthome.y"
+#line 38 "parser.y"
 
-
-void yyerror(const char* s) {
-    fprintf(stderr, "Error: %s near '%s'\n", s, yytext);
-    exit(EXIT_FAILURE);
-}
-
-int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        fprintf(stderr, "Usage: %s input_file\n", argv[0]);
-        exit(EXIT_FAILURE);
-    }
-
-    FILE* input_file = fopen(argv[1], "r");
-    if (!input_file) {
-        perror("Error opening input file");
-        exit(EXIT_FAILURE);
-    }
-
-    yyin = input_file;
-
-    SmartObject* obj = NULL;  // Добавим переменную для хранения объекта
-    // yyparse(&obj);  // Передадим указатель на объект в yyparse
-
-    yyparse();
-
-    fclose(input_file);
-
-    return 0;
-}
