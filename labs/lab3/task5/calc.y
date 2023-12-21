@@ -29,14 +29,16 @@ void yyerror(const char *s);
 }
 
 %token <d> NUMBER
-%token ADD SUB AND
+%token ADD SUB END
 %left '+' '-'
 %left '*' '/'
 %type <a> expr term factor
 
 %%
 
-calc: expr AND { printf("Result: %f\n", eval($1)); treefree($1); }
+calc: /* empty */
+    | calc expr END { printf("Result: %f\n", eval($2)); treefree($2); }
+    ;
 
 expr: expr ADD term   { $$ = newast('+', $1, $3); }
     | expr SUB term   { $$ = newast('-', $1, $3); }

@@ -729,12 +729,12 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 YY_RULE_SETUP
 #line 8 "calc.l"
-{ yylval = atof(yytext); return FLOAT; }
+{ yylval.d = atof(yytext); return FLOAT; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
 #line 9 "calc.l"
-{ yylval = atoi(yytext); return INTEGER; }
+{ yylval.f = atoi(yytext); return INTEGER; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
@@ -775,7 +775,7 @@ YY_RULE_SETUP
 case 10:
 YY_RULE_SETUP
 #line 17 "calc.l"
-{ yyerror("unexpected character"); }
+{ yyerror("unexpected character"); return 0; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP

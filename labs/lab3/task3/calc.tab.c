@@ -1062,7 +1062,7 @@ yyreduce:
     {
   case 2: /* expression: NUM  */
 #line 14 "calc.y"
-               { printf("%d " , yyvsp[0]); }
+               { printf("%d" , yyvsp[0]); }
 #line 1067 "calc.tab.c"
     break;
 

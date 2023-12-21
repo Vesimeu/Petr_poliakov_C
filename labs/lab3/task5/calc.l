@@ -12,7 +12,7 @@ void yyerror(const char *s);
 "/" { return '/'; }
 "(" { return '('; }
 ")" { return ')'; }
-[\n] { return AND; }
+[\n] { return END; }
 " " {};
 . { yyerror("unknown character"); }
 

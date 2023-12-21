@@ -44,13 +44,6 @@
 #if YYDEBUG
 extern int yydebug;
 #endif
-/* "%code requires" blocks.  */
-#line 2 "calc.y"
-
-    #define YYSTYPE double
-  
-
-#line 54 "calc.tab.h"
 
 /* Token kinds.  */
 #ifndef YYTOKENTYPE
@@ -61,21 +54,31 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    FLOAT = 258,                   /* FLOAT  */
-    INTEGER = 259,                 /* INTEGER  */
-    PLUS = 260,                    /* PLUS  */
-    MINUS = 261,                   /* MINUS  */
-    TIMES = 262,                   /* TIMES  */
-    DIVIDE = 263,                  /* DIVIDE  */
-    LPAREN = 264,                  /* LPAREN  */
-    RPAREN = 265                   /* RPAREN  */
+    PLUS = 258,                    /* PLUS  */
+    MINUS = 259,                   /* MINUS  */
+    TIMES = 260,                   /* TIMES  */
+    DIVIDE = 261,                  /* DIVIDE  */
+    LPAREN = 262,                  /* LPAREN  */
+    RPAREN = 263,                  /* RPAREN  */
+    FLOAT = 264,                   /* FLOAT  */
+    INTEGER = 265                  /* INTEGER  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+union YYSTYPE
+{
+#line 11 "calc.y"
+
+  double d;
+  int f;
+
+#line 79 "calc.tab.h"
+
+};
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif

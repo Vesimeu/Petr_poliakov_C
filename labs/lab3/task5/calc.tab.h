@@ -57,7 +57,7 @@ extern int yydebug;
     NUMBER = 258,                  /* NUMBER  */
     ADD = 259,                     /* ADD  */
     SUB = 260,                     /* SUB  */
-    AND = 261                      /* AND  */
+    END = 261                      /* END  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif

@@ -1,5 +1,6 @@
 %{
 #include <stdio.h>
+void yyerror(const char *s);
 %}
 
 %token NUMBER

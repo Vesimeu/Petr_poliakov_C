@@ -769,7 +769,7 @@ case 9:
 /* rule 9 can match eol */
 YY_RULE_SETUP
 #line 15 "calc.l"
-{ return AND; }
+{ return END; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP

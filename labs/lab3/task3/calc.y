@@ -11,7 +11,7 @@
 %%
 
 expression: 
-    NUM        { printf("%d " , $1); }
+    NUM        { printf("%d" , $1); }
   | LPAREN expression RPAREN     { }
   | expression PLUS expression   { printf("+ "); }
   | expression MINUS expression  { printf("- "); }
@@ -23,7 +23,7 @@ expression:
 
 int yyerror(const char *s) {
     fprintf(stderr, "Error: %s\n", s);
-    printf("\n programm stop");
+    printf("\n programm stop"); 
     return 1;
 }
 

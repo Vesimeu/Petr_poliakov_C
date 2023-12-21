@@ -12,7 +12,7 @@
 "/"         { return DIVIDE; }
 "("         { return LPAREN; }
 ")"         { return RPAREN; }
-[ \t]     { /* игнорируем пробелы и символы конца строки */ }
+[\t]     { /* игнорируем пробелы и символы конца строки */ }
 [\n]     { return 0; }
 .           { yyerror("unexpected character"); }
 
