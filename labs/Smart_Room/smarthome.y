@@ -94,7 +94,7 @@ set_temperature_statement: object DOT SET_TEMPERATURE LPAREN INTEGER RPAREN { ad
 // Обновим команду для вывода статуса
 status_command_def: object DOT STATUS LPAREN RPAREN { add_command_to_list(print_object_state, current_object); }
              ;
-status_command: object DOT STATUS LPAREN RPAREN {print_object_state(current_object) ; };
+status_command: object DOT STATUS LPAREN RPAREN {add_command_to_list(print_object_state, get_object($1), 0) ; };
 
 expression_statement: object DOT attribute_name LPAREN argument_list RPAREN SEMICOLON
 {
@@ -119,31 +119,33 @@ relation_operator: GREATER
                 ;
 
 if_else_statement: 
-    IF condition LBRACE
     {
-        in_false_if_block = !evaluate_condition($2);
+        execute_command_list(); // Выполнить команды перед проверкой условия if
     }
-    statement_list 
-    RBRACE
+    IF condition LBRACE 
+    {
+        in_false_if_block = !evaluate_condition($3); // Использовать $3 вместо $2
+    }
+    statement_list RBRACE
     {
         in_false_if_block = false;
     }
-    | IF condition LBRACE 
-    {
-        in_false_if_block = !evaluate_condition($2);
+    | {
+        execute_command_list(); // Выполнить команды перед проверкой условия if
     }
-    statement_list 
-    RBRACE ELSE LBRACE
+    IF condition LBRACE 
+    {
+        in_false_if_block = !evaluate_condition($3); // Использовать $3 вместо $2
+    }
+    statement_list RBRACE ELSE LBRACE
     {
         in_false_if_block = true;
     }
-    statement_list
-    RBRACE
+    statement_list RBRACE
     {
         in_false_if_block = false;
     }
     ;
-
 
 
 argument_list: expression
