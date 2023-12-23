@@ -41,14 +41,18 @@ typedef struct {
 extern SmartObject* current_object;
 extern BlockFunction if_block;
 extern BlockFunction else_block;
+extern bool in_false_if_block;
+
+
 
 void add_command(CommandFunction func, SmartObject* obj);
 void execute_commands();
 void clear_commands();
+void execute_block_list(BlockFunction* block_list);
 SmartObject* get_object(const char* name);
 void execute_if_else(Condition* condition, BlockFunction if_block, BlockFunction else_block);
 void execute_block(const char* command, SmartObject* obj);
-void add_command_to_list(void (*execute)(SmartObject*, int), SmartObject* obj);
+void add_command_to_list(void (*execute)(SmartObject*, int), SmartObject* obj, int arg);
 void print_object_state(SmartObject* obj);
 SmartObject* create_object(const char* name);
 void print_attribute(int attribute_value);
@@ -56,7 +60,6 @@ void turn_on_light(SmartObject* obj);
 bool evaluate_condition(const Condition* condition);
 void execute_method(SmartObject* obj, const char* method_name, int argument) ;
 int get_attribute_value(SmartObject* obj, const char* attribute_name);
-void execute_block_list(BlockFunction* block_list);
 void turn_off_light(SmartObject* obj);
 void add_command_to_list_3args(void (*execute)(SmartObject*, int), SmartObject* obj, int arg);
 void add_command_to_list_2args(void (*execute)(SmartObject*, int), SmartObject* obj);

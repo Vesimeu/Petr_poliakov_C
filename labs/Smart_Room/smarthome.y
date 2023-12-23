@@ -7,11 +7,10 @@
 
 // #define YYSTYPE_IS_DECLARED 1
 // #define YYSTYPE_IS_TRIVIAL 1
-
+bool in_false_if_block = false;
 extern FILE* yyin;
 extern int yylex();
 extern char* yytext;
-
 
 struct SmartObject;
 SmartObject* current_object = NULL;  // Добавим переменную для хранения объекта
@@ -56,9 +55,7 @@ program: statement_list
 statement_list: statement
               | statement_list statement
               ;
-statement_list_def: statement_def
-              | statement_list_def statement_def
-              ;       
+
 
 statement: create_object_statement SEMICOLON 
          | expression_statement SEMICOLON
@@ -69,7 +66,6 @@ statement: create_object_statement SEMICOLON
          | print_statement SEMICOLON 
          | if_else_statement 
          ;
-statement_def : light_command_defolt SEMICOLON | set_temperature_statement SEMICOLON   ;
 // Вместо того чтобы использовать $1 в качестве значения атрибута объекта, создайте новый объект с использованием текущего объекта, а затем обновите текущий объект.
 create_object_statement: CREATE_OBJECT STRING { $$ = create_object($2); current_object = $$; }
 ;
@@ -79,21 +75,26 @@ light_command_defolt: object DOT TURN_ON_LIGHT LPAREN RPAREN { turn_on_light(cur
             | object DOT TURN_OFF_LIGHT LPAREN RPAREN { turn_off_light(current_object); }
             ;  
             
-light_command: object DOT TURN_ON_LIGHT LPAREN RPAREN { add_command_to_list(turn_on_light, current_object); }
-            | object DOT TURN_OFF_LIGHT LPAREN RPAREN { add_command_to_list(turn_off_light, current_object); }
-            ;        
+light_command: object DOT TURN_ON_LIGHT LPAREN RPAREN { 
+                add_command_to_list(turn_on_light, get_object($1), 0); 
+             }
+             | object DOT TURN_OFF_LIGHT LPAREN RPAREN { 
+                add_command_to_list(turn_off_light, get_object($1), 0); 
+             }
+             // И так далее для других команд
+     
 
-blinds_command: object DOT TURN_ON_BLINDS LPAREN RPAREN { add_command_to_list(turn_on_blinds, get_object($1)); }
-             | object DOT TURN_OFF_BLINDS LPAREN RPAREN { add_command_to_list(turn_off_blinds, get_object($1)); }
+blinds_command: object DOT TURN_ON_BLINDS LPAREN RPAREN { add_command_to_list(turn_on_blinds, get_object($1), 0); }
+             | object DOT TURN_OFF_BLINDS LPAREN RPAREN { add_command_to_list(turn_off_blinds, get_object($1), 0); }
              ;
 
 
-set_temperature_statement: object DOT SET_TEMPERATURE LPAREN INTEGER RPAREN { set_temperature(current_object, $5); };
+set_temperature_statement: object DOT SET_TEMPERATURE LPAREN INTEGER RPAREN { add_command_to_list(set_temperature, get_object($1), $5) ;};
 
 // Обновим команду для вывода статуса
-status_command: object DOT STATUS LPAREN RPAREN { add_command_to_list(print_object_state, current_object); }
+status_command_def: object DOT STATUS LPAREN RPAREN { add_command_to_list(print_object_state, current_object); }
              ;
-
+status_command: object DOT STATUS LPAREN RPAREN {print_object_state(current_object) ; };
 
 expression_statement: object DOT attribute_name LPAREN argument_list RPAREN SEMICOLON
 {
@@ -117,22 +118,31 @@ relation_operator: GREATER
                 | EQUAL 
                 ;
 
-
-if_else_statement: IF condition LBRACE statement_list_def RBRACE
-{
-    if (evaluate_condition($2)) {
-        execute_command_list();
+if_else_statement: 
+    IF condition LBRACE
+    {
+        in_false_if_block = !evaluate_condition($2);
     }
-}
-| IF condition LBRACE statement_list RBRACE ELSE LBRACE statement_list_def RBRACE
-{
-    if (evaluate_condition($2)) {
-        execute_command_list();
-    } else {
-        execute_command_list();
+    statement_list 
+    RBRACE
+    {
+        in_false_if_block = false;
     }
-}
-;
+    | IF condition LBRACE 
+    {
+        in_false_if_block = !evaluate_condition($2);
+    }
+    statement_list 
+    RBRACE ELSE LBRACE
+    {
+        in_false_if_block = true;
+    }
+    statement_list
+    RBRACE
+    {
+        in_false_if_block = false;
+    }
+    ;
 
 
 
@@ -191,8 +201,10 @@ int main(int argc, char* argv[]) {
     // yyparse(&obj);  // Передадим указатель на объект в yyparse
 
     yyparse();
-
+    execute_command_list();
     fclose(input_file);
+
+
 
     return 0;
 }

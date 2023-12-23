@@ -9,7 +9,6 @@
 BlockFunction if_block = NULL;
 BlockFunction else_block = NULL;
 bool last_condition_result = false;
-
 // В файле smart_objects.c
 
 #define MAX_COMMANDS 100  // Примерное ограничение на количество команд
@@ -39,16 +38,20 @@ SmartObject* get_object(const char* name) {
 }
 
 // Функция для добавления команды с двумя аргументами
-void add_command_to_list(void (*execute)(SmartObject*, int), SmartObject* obj) {
+void add_command_to_list(void (*execute)(SmartObject*, int), SmartObject* obj, int arg) {
+    if (in_false_if_block) {
+        return; // Не добавлять команды, если внутри блока if с ложным условием
+    }
     if (commandCount >= MAX_COMMANDS) {
         fprintf(stderr, "Превышено максимальное количество команд\n");
         return;
     }
     commandList[commandCount].execute = execute;
     commandList[commandCount].object = obj;
-    commandList[commandCount].arg = 0;  // Установите аргумент в 0
+    commandList[commandCount].arg = arg;
     commandCount++;
 }
+
 
 // Функция для добавления команды с тремя аргументами
 void add_command_to_list_3args(void (*execute)(SmartObject*, int), SmartObject* obj, int arg) {
@@ -65,10 +68,11 @@ void add_command_to_list_3args(void (*execute)(SmartObject*, int), SmartObject* 
 void execute_command_list() {
     for (int i = 0; i < commandCount; i++) {
         Command cmd = commandList[i];
-        cmd.execute(cmd.object, cmd.arg); // Передаем аргумент в выполнение команды
+        cmd.execute(cmd.object, cmd.arg);
     }
-    commandCount = 0;  // Очищаем список после выполнения
+    commandCount = 0; // Сброс списка команд после выполнения
 }
+
 
 
 
@@ -295,22 +299,4 @@ Condition* create_condition_attribute(SmartObject* object, const char* attribute
 
     return condition;
 }
-
-
-
-// void block(const char* command, SmartObject* obj, int arg) {
-//     if (strcmp(command, "turn_on_light") == 0) {
-//         turn_on_light(obj);
-//     } else if (strcmp(command, "turn_off_light") == 0) {
-//         turn_off_light(obj);
-//     } else if (strcmp(command, "turn_on_blinds") == 0) {
-//         turn_on_blinds(obj);
-//     } else if (strcmp(command, "turn_off_blinds") == 0) {
-//         turn_off_blinds(obj);
-//     } else if (strcmp(command, "status") == 0) {
-//         print_object_state(obj);
-//     } else if (strcmp(command, "set_temperature") == 0) {
-//         set_temperature(obj, arg);
-//     }
-// }
 
