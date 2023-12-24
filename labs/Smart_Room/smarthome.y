@@ -69,6 +69,7 @@ statement: create_object_statement SEMICOLON
          | print_statement SEMICOLON 
          | if_else_statement 
          | variable_declaration SEMICOLON
+         | assignment_statement SEMICOLON
          ;
 // Вместо того чтобы использовать $1 в качестве значения атрибута объекта, создайте новый объект с использованием текущего объекта, а затем обновите текущий объект.
 create_object_statement: CREATE_OBJECT STRING { $$ = create_object($2); current_object = $$; }
@@ -102,16 +103,22 @@ expression_statement: object DOT attribute_name LPAREN argument_list RPAREN SEMI
     execute_method($1, $3, $5); // Выполняем метод объекта
 }
 
-print_statement: PRINT LPAREN ID RPAREN { 
-                    Variable* var = get_variable($3);
-                    if (var != NULL) {
-                        print_variable(var);
-                    } else {
-                        fprintf(stderr, "Error: Variable '%s' not found\n", $3);
-                    }
-                }
-  | PRINT LPAREN attribute RPAREN {add_command_to_list(print_attribute, $3 , 0) ;}
-  ;
+print_statement: 
+    PRINT LPAREN ID RPAREN {
+        Variable* var = get_variable($3);
+        if (var != NULL) {
+            if (var->type == INT) {
+                printf("%d\n", var->int_value);
+            } else if (var->type == STRING) {
+                printf("%s\n", var->str_value);
+            }
+        } else {
+            fprintf(stderr, "Error: Variable '%s' not found\n", $3);
+        }
+    }
+    | PRINT LPAREN expression RPAREN { print_expression_result($3); }
+    | PRINT LPAREN STRING RPAREN { printf("%s\n", $3); }
+    ;
 
 
 condition: LPAREN expression relation_operator expression RPAREN
@@ -159,6 +166,9 @@ statement_list RBRACE
 }
 ;
 
+assignment_statement: 
+    ID EQUAL expression { set_int_variable($1, $3); }
+    ;
 
 variable_declaration:
     INT_TYPE ID EQUAL INTEGER {

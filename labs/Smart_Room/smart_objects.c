@@ -80,6 +80,12 @@ void print_variable(Variable* var) {
 }
 
 
+void print_expression_result(int result) {
+    printf("%d\n", result);
+}
+
+
+
 void set_int_variable(const char* name, int value) {
     for (int i = 0; i < variableCount; ++i) {
         if (strcmp(variables[i].name, name) == 0 && variables[i].type == INT) {

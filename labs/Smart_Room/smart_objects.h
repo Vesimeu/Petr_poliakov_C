@@ -69,6 +69,8 @@ void set_int_variable(const char* name, int value);
 void set_string_variable(const char* name, const char* value);
 Variable* get_variable(const char* name);
 void print_variable(Variable* var);
+void print_expression_result(int result);
+
 
 
 void add_command(CommandFunction func, SmartObject* obj);

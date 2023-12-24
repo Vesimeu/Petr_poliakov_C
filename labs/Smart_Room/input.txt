@@ -1,12 +1,20 @@
+print("By @Vesimeu");
+print("- Добро пожаловать в язык программирования для умного дома");
 create_object "LivingRoom";
+print("Отлично!Но одной комнаты мало, думаю надо ещё");
+create_object "MyRoom";
 "LivingRoom".set_temperature(23);
-int A == 23;
-print(A);
-"LivingRoom".turn_on_light();
-if (A == 23) { 
-    "LivingRoom".turn_off_light();
-    "LivingRoom".set_temperature(20);
-} else {
-    "LivingRoom".turn_off_light();
+"MyRoom".set_temperature(20);
+int A == 3;
+print(5 * 5);
+if ("LivingRoom".temperature == 23) {
+    "LivingRoom".turn_on_light();
 }
-"LivingRoom".status();
+else{
+    "LivingRoom".turn_off_light();
+    "MyRoom".turn_on_blinds();
+    "MyRoom".turn_on_light();
+}
+"MyRoom".status();
+A == 20;
+print(A * 5);
