@@ -570,9 +570,9 @@ static const yytype_uint8 yyrline[] =
 {
        0,    55,    55,    58,    59,    63,    64,    65,    66,    67,
       68,    69,    70,    71,    74,    80,    83,    89,    90,    94,
-      98,   100,   106,   110,   118,   119,   120,   124,   128,   132,
-     124,   140,   144,   140,   154,   157,   162,   163,   166,   167,
-     168,   169,   170,   171,   174,   175,   176,   179,   182,   185
+      98,   100,   106,   110,   118,   119,   120,   124,   128,   133,
+     124,   141,   145,   141,   157,   160,   165,   166,   169,   170,
+     171,   172,   173,   174,   177,   178,   179,   182,   185,   188
 };
 #endif
 
@@ -1278,96 +1278,98 @@ yyreduce:
 
   case 27: /* $@1: %empty  */
 #line 124 "smarthome.y"
- {
-        execute_command_list(); // Выполнить команды перед проверкой условия if
-    }
+{
+    execute_command_list(); // Выполняем все команды до if
+}
 #line 1285 "smarthome.tab.c"
     break;
 
   case 28: /* $@2: %empty  */
 #line 128 "smarthome.y"
-    {
-        in_false_if_block = !evaluate_condition((yyvsp[-1].conditionval)); // Использовать $3 вместо $2
-    }
-#line 1293 "smarthome.tab.c"
+{
+    bool condition_result = evaluate_condition((yyvsp[-1].conditionval));
+    in_false_if_block = !condition_result;
+}
+#line 1294 "smarthome.tab.c"
     break;
 
   case 29: /* $@3: %empty  */
-#line 132 "smarthome.y"
-    {
-        in_false_if_block = true;
-    }
-#line 1301 "smarthome.tab.c"
+#line 133 "smarthome.y"
+{
+    in_false_if_block = !in_false_if_block; // Инвертируем значение для блока else
+}
+#line 1302 "smarthome.tab.c"
     break;
 
   case 30: /* if_else_statement: $@1 IF condition LBRACE $@2 statement_list RBRACE ELSE LBRACE $@3 statement_list RBRACE  */
-#line 136 "smarthome.y"
-    {
-        in_false_if_block = false;
-    }
-#line 1309 "smarthome.tab.c"
+#line 137 "smarthome.y"
+{
+    in_false_if_block = false; // Сбрасываем значение после выполнения if или else
+}
+#line 1310 "smarthome.tab.c"
     break;
 
   case 31: /* $@4: %empty  */
-#line 140 "smarthome.y"
-    {
-        execute_command_list(); // Выполнить команды перед проверкой условия if
-    }
-#line 1317 "smarthome.tab.c"
+#line 141 "smarthome.y"
+{
+    execute_command_list(); // Выполняем все команды до if
+}
+#line 1318 "smarthome.tab.c"
     break;
 
   case 32: /* $@5: %empty  */
-#line 144 "smarthome.y"
-    {
-        in_false_if_block = !evaluate_condition((yyvsp[-1].conditionval)); // Использовать $3 вместо $2
-    }
-#line 1325 "smarthome.tab.c"
+#line 145 "smarthome.y"
+{
+    bool condition_result = evaluate_condition((yyvsp[-1].conditionval));
+    in_false_if_block = !condition_result;
+}
+#line 1327 "smarthome.tab.c"
     break;
 
   case 33: /* if_else_statement: $@4 IF condition LBRACE $@5 statement_list RBRACE  */
-#line 148 "smarthome.y"
-    {
-        in_false_if_block = false;
-    }
-#line 1333 "smarthome.tab.c"
+#line 150 "smarthome.y"
+{
+    in_false_if_block = false; // Сбрасываем значение после выполнения if
+}
+#line 1335 "smarthome.tab.c"
     break;
 
   case 34: /* variable_declaration: INT_TYPE ID EQUAL INTEGER  */
-#line 154 "smarthome.y"
+#line 157 "smarthome.y"
                               {
         add_int_variable((yyvsp[-2].strval), (yyvsp[0].intval));
     }
-#line 1341 "smarthome.tab.c"
+#line 1343 "smarthome.tab.c"
     break;
 
   case 35: /* variable_declaration: STRING_TYPE ID EQUAL STRING_VALUE  */
-#line 157 "smarthome.y"
+#line 160 "smarthome.y"
                                       {
         add_string_variable((yyvsp[-2].strval), (yyvsp[0].strval));
     }
-#line 1349 "smarthome.tab.c"
+#line 1351 "smarthome.tab.c"
     break;
 
   case 41: /* expression: object DOT attribute_name LPAREN argument_list RPAREN  */
-#line 169 "smarthome.y"
+#line 172 "smarthome.y"
                                                                   { (yyval.intval) = (SmartObject*)(yyvsp[-5].objectval); }
-#line 1355 "smarthome.tab.c"
+#line 1357 "smarthome.tab.c"
     break;
 
   case 47: /* object: STRING  */
-#line 179 "smarthome.y"
+#line 182 "smarthome.y"
                { (yyval.objectval) = get_object((yyvsp[0].strval)); }
-#line 1361 "smarthome.tab.c"
+#line 1363 "smarthome.tab.c"
     break;
 
   case 49: /* attribute: object DOT ID  */
-#line 185 "smarthome.y"
+#line 188 "smarthome.y"
                          { (yyval.intval) = get_attribute_value(current_object, (yyvsp[0].strval)); }
-#line 1367 "smarthome.tab.c"
+#line 1369 "smarthome.tab.c"
     break;
 
 
-#line 1371 "smarthome.tab.c"
+#line 1373 "smarthome.tab.c"
 
       default: break;
     }
@@ -1560,7 +1562,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 192 "smarthome.y"
+#line 195 "smarthome.y"
 
 
 void yyerror(const char* s) {

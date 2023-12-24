@@ -81,19 +81,19 @@ void print_variable(Variable* var) {
 
 
 
-// Функция для добавления команды с двумя аргументами
 void add_command_to_list(void (*execute)(SmartObject*, int), SmartObject* obj, int arg) {
-    if (in_false_if_block) {
-        return; // Не добавлять команды, если внутри блока if с ложным условием
+    // Проверяем, находимся ли мы вне блока if или внутри блока else после ложного if
+    if (!in_false_if_block) {
+        // Добавляем команду в список, так как мы либо вне блока if, либо в блоке else после ложного if
+        if (commandCount >= MAX_COMMANDS) {
+            fprintf(stderr, "Превышено максимальное количество команд\n");
+            return;
+        }
+        commandList[commandCount].execute = execute;
+        commandList[commandCount].object = obj;
+        commandList[commandCount].arg = arg;
+        commandCount++;
     }
-    if (commandCount >= MAX_COMMANDS) {
-        fprintf(stderr, "Превышено максимальное количество команд\n");
-        return;
-    }
-    commandList[commandCount].execute = execute;
-    commandList[commandCount].object = obj;
-    commandList[commandCount].arg = arg;
-    commandCount++;
 }
 
 

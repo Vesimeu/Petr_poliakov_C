@@ -120,35 +120,38 @@ relation_operator: GREATER
                 | EQUAL 
                 ;
 
-if_else_statement: 
- {
-        execute_command_list(); // Выполнить команды перед проверкой условия if
-    }
-    IF condition LBRACE 
-    {
-        in_false_if_block = !evaluate_condition($3); // Использовать $3 вместо $2
-    }
-    statement_list RBRACE ELSE LBRACE
-    {
-        in_false_if_block = true;
-    }
-    statement_list RBRACE
-    {
-        in_false_if_block = false;
-    } 
-    |
-    {
-        execute_command_list(); // Выполнить команды перед проверкой условия if
-    }
-    IF condition LBRACE 
-    {
-        in_false_if_block = !evaluate_condition($3); // Использовать $3 вместо $2
-    }
-    statement_list RBRACE
-    {
-        in_false_if_block = false;
-    }
-    ;
+if_else_statement:
+{
+    execute_command_list(); // Выполняем все команды до if
+}
+IF condition LBRACE
+{
+    bool condition_result = evaluate_condition($3);
+    in_false_if_block = !condition_result;
+}
+statement_list RBRACE ELSE LBRACE
+{
+    in_false_if_block = !in_false_if_block; // Инвертируем значение для блока else
+}
+statement_list RBRACE
+{
+    in_false_if_block = false; // Сбрасываем значение после выполнения if или else
+}
+|
+{
+    execute_command_list(); // Выполняем все команды до if
+}
+IF condition LBRACE
+{
+    bool condition_result = evaluate_condition($3);
+    in_false_if_block = !condition_result;
+}
+statement_list RBRACE
+{
+    in_false_if_block = false; // Сбрасываем значение после выполнения if
+}
+;
+
 
 variable_declaration:
     INT_TYPE ID EQUAL INTEGER {

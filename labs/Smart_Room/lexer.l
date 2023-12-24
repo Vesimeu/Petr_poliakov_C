@@ -15,7 +15,7 @@ struct SmartObject;
 "if"                   { return IF; }
 "int"                     { return INT_TYPE; }
 "string"                     { return STRING_TYPE; }
-"else"                 { return ELSE; }
+"else"                 { return ELSSE; }
 "turn_on_light"        { return TURN_ON_LIGHT; }  // Добавляем токен для команды включения света
 "turn_off_light"       { return TURN_OFF_LIGHT; }  // Добавляем токен для команды выключения света
 "turn_on_blinds"       { return TURN_ON_BLINDS; }  // Добавляем токен для команды включения жалюзи
