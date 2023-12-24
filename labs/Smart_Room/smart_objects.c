@@ -11,6 +11,11 @@ BlockFunction else_block = NULL;
 bool last_condition_result = false;
 // В файле smart_objects.c
 
+
+Variable variables[MAX_VARIABLES];
+int variableCount = 0;
+
+
 #define MAX_COMMANDS 100  // Примерное ограничение на количество команд
 Command commandList[MAX_COMMANDS];
 int commandCount = 0;
@@ -37,6 +42,45 @@ SmartObject* get_object(const char* name) {
     return NULL;
 }
 
+
+void add_int_variable(const char* name, int value) {
+    if (variableCount >= MAX_VARIABLES) {
+        fprintf(stderr, "Превышено максимальное количество переменных\n");
+        return;
+    }
+    Variable* var = &variables[variableCount++];
+    strncpy(var->name, name, sizeof(var->name) - 1);
+    var->type = INT;
+    var->int_value = value;
+}
+
+void add_string_variable(const char* name, const char* value) {
+    // Аналогично для строки
+}
+
+void set_int_variable(const char* name, int value) {
+    // Поиск и изменение значения int переменной
+}
+
+void set_string_variable(const char* name, const char* value) {
+    // Поиск и изменение значения string переменной
+}
+
+Variable* get_variable(const char* name) {
+    // Поиск переменной по имени
+}
+
+void print_variable(Variable* var) {
+    if (var->type == INT) {
+        printf("%d\n", var->int_value);
+    } else if (var->type == VAR_STRING_TYPE) {
+        printf("%s\n", var->str_value);
+    }
+}
+
+
+
+
 // Функция для добавления команды с двумя аргументами
 void add_command_to_list(void (*execute)(SmartObject*, int), SmartObject* obj, int arg) {
     if (in_false_if_block) {
@@ -53,17 +97,6 @@ void add_command_to_list(void (*execute)(SmartObject*, int), SmartObject* obj, i
 }
 
 
-// Функция для добавления команды с тремя аргументами
-void add_command_to_list_3args(void (*execute)(SmartObject*, int), SmartObject* obj, int arg) {
-    if (commandCount >= MAX_COMMANDS) {
-        fprintf(stderr, "Превышено максимальное количество команд\n");
-        return;
-    }
-    commandList[commandCount].execute = execute;
-    commandList[commandCount].object = obj;
-    commandList[commandCount].arg = arg;  // Установите аргумент в переданное значение
-    commandCount++;
-}
 
 void execute_command_list() {
     for (int i = 0; i < commandCount; i++) {

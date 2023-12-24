@@ -75,16 +75,19 @@ extern int yydebug;
     DOT = 276,                     /* DOT  */
     SET_TEMPERATURE = 277,         /* SET_TEMPERATURE  */
     PRINT = 278,                   /* PRINT  */
-    TURN_ON_LIGHT = 279,           /* TURN_ON_LIGHT  */
-    TURN_OFF_LIGHT = 280,          /* TURN_OFF_LIGHT  */
-    TURN_ON_BLINDS = 281,          /* TURN_ON_BLINDS  */
-    TURN_OFF_BLINDS = 282,         /* TURN_OFF_BLINDS  */
-    STATUS = 283,                  /* STATUS  */
-    GREATER = 284,                 /* GREATER  */
-    LESS = 285,                    /* LESS  */
-    EQUAL = 286,                   /* EQUAL  */
-    STRING = 287,                  /* STRING  */
-    ID = 288                       /* ID  */
+    STRING_VALUE = 279,            /* STRING_VALUE  */
+    INT_TYPE = 280,                /* INT_TYPE  */
+    STRING_TYPE = 281,             /* STRING_TYPE  */
+    TURN_ON_LIGHT = 282,           /* TURN_ON_LIGHT  */
+    TURN_OFF_LIGHT = 283,          /* TURN_OFF_LIGHT  */
+    TURN_ON_BLINDS = 284,          /* TURN_ON_BLINDS  */
+    TURN_OFF_BLINDS = 285,         /* TURN_OFF_BLINDS  */
+    STATUS = 286,                  /* STATUS  */
+    GREATER = 287,                 /* GREATER  */
+    LESS = 288,                    /* LESS  */
+    EQUAL = 289,                   /* EQUAL  */
+    STRING = 290,                  /* STRING  */
+    ID = 291                       /* ID  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -100,9 +103,10 @@ union YYSTYPE
     SmartObject* objectval;
     Condition* conditionval; // Добавьте эту строку
     BlockFunction* blocklistval;
+    Variable* varval;
     
 
-#line 106 "smarthome.tab.h"
+#line 110 "smarthome.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

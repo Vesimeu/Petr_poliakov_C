@@ -2,6 +2,7 @@
 #ifndef SMART_OBJECTS_H
 #define SMART_OBJECTS_H
 #define MAX_OBJECTS 100 
+#define MAX_VARIABLES 50
 
 typedef struct {
     char name[50];
@@ -16,7 +17,20 @@ extern SmartObject* objects[MAX_OBJECTS];
 extern int objectCount;
 typedef void (*CommandFunction)(SmartObject* obj);
 
-// В файле smart_objects.h
+typedef enum { INT, VAR_STRING_TYPE } VarType;
+
+
+typedef struct {
+    char name[50];
+    VarType type;
+    union {
+        int int_value;
+        char* str_value;
+    };
+} Variable;
+
+extern Variable variables[MAX_VARIABLES];
+extern int variableCount;
 
 typedef struct Command {
     void (*execute)(SmartObject*, int);  // Обновите указатель на функцию, чтобы он мог принимать аргумент
@@ -43,6 +57,13 @@ extern BlockFunction if_block;
 extern BlockFunction else_block;
 extern bool in_false_if_block;
 
+// Функции для работы с переменными
+void add_int_variable(const char* name, int value);
+void add_string_variable(const char* name, const char* value);
+void set_int_variable(const char* name, int value);
+void set_string_variable(const char* name, const char* value);
+Variable* get_variable(const char* name);
+void print_variable(Variable* var);
 
 
 void add_command(CommandFunction func, SmartObject* obj);
@@ -61,8 +82,6 @@ bool evaluate_condition(const Condition* condition);
 void execute_method(SmartObject* obj, const char* method_name, int argument) ;
 int get_attribute_value(SmartObject* obj, const char* attribute_name);
 void turn_off_light(SmartObject* obj);
-void add_command_to_list_3args(void (*execute)(SmartObject*, int), SmartObject* obj, int arg);
-void add_command_to_list_2args(void (*execute)(SmartObject*, int), SmartObject* obj);
 void set_temperature(SmartObject* obj, int temperature);
 void turn_off_blinds(SmartObject* obj);
 void turn_on_blinds(SmartObject* obj);

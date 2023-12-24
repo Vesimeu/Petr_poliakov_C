@@ -32,6 +32,7 @@ void yyerror(const char* s);
     SmartObject* objectval;
     Condition* conditionval; // Добавьте эту строку
     BlockFunction* blocklistval;
+    Variable* varval;
     
 }
 
@@ -39,9 +40,11 @@ void yyerror(const char* s);
 %token <intval> INTEGER 
 %token <objectval> CREATE_OBJECT IF ELSE TURN_ON TURN_OFF SET_VOLUME GRANT_ACCESS CURRENT_TIME SUNRISE_TIME SUNSET_TIME 
 %token COLON SEMICOLON LPAREN RPAREN LBRACE RBRACE COMMA DOT SET_TEMPERATURE PRINT
-%token <strval> TURN_ON_LIGHT TURN_OFF_LIGHT TURN_ON_BLINDS TURN_OFF_BLINDS STATUS GREATER LESS EQUAL STRING ID
+%token <strval> STRING_VALUE 
+%token INT_TYPE STRING_TYPE 
+%token <strval> TURN_ON_LIGHT TURN_OFF_LIGHT TURN_ON_BLINDS TURN_OFF_BLINDS STATUS GREATER LESS EQUAL STRING ID 
 
-
+%type <varval> variable_declaration
 %type <intval> expression SET_TEMPERATURE  attribute argument_list
 %type <strval> attribute_name relation_operator
 %type <objectval> create_object_statement light_command blinds_command status_command object expression_statement light_command_defolt
@@ -65,15 +68,14 @@ statement: create_object_statement SEMICOLON
          | set_temperature_statement SEMICOLON    
          | print_statement SEMICOLON 
          | if_else_statement 
+         | variable_declaration SEMICOLON
          ;
 // Вместо того чтобы использовать $1 в качестве значения атрибута объекта, создайте новый объект с использованием текущего объекта, а затем обновите текущий объект.
 create_object_statement: CREATE_OBJECT STRING { $$ = create_object($2); current_object = $$; }
 ;
 
 // Обновим команды для управления светом
-light_command_defolt: object DOT TURN_ON_LIGHT LPAREN RPAREN { turn_on_light(current_object); }
-            | object DOT TURN_OFF_LIGHT LPAREN RPAREN { turn_off_light(current_object); }
-            ;  
+
             
 light_command: object DOT TURN_ON_LIGHT LPAREN RPAREN { 
                 add_command_to_list(turn_on_light, get_object($1), 0); 
@@ -91,9 +93,8 @@ blinds_command: object DOT TURN_ON_BLINDS LPAREN RPAREN { add_command_to_list(tu
 
 set_temperature_statement: object DOT SET_TEMPERATURE LPAREN INTEGER RPAREN { add_command_to_list(set_temperature, get_object($1), $5) ;};
 
-// Обновим команду для вывода статуса
-status_command_def: object DOT STATUS LPAREN RPAREN { add_command_to_list(print_object_state, current_object); }
-             ;
+
+             
 status_command: object DOT STATUS LPAREN RPAREN {add_command_to_list(print_object_state, get_object($1), 0) ; };
 
 expression_statement: object DOT attribute_name LPAREN argument_list RPAREN SEMICOLON
@@ -102,7 +103,8 @@ expression_statement: object DOT attribute_name LPAREN argument_list RPAREN SEMI
 }
 
 
-print_statement: PRINT LPAREN attribute RPAREN { print_attribute($3); }
+print_statement: PRINT LPAREN attribute RPAREN {add_command_to_list(print_attribute, $3 , 0) ;}          
+                        
 ;
 
 condition: LPAREN expression relation_operator expression RPAREN
@@ -119,18 +121,7 @@ relation_operator: GREATER
                 ;
 
 if_else_statement: 
-    {
-        execute_command_list(); // Выполнить команды перед проверкой условия if
-    }
-    IF condition LBRACE 
-    {
-        in_false_if_block = !evaluate_condition($3); // Использовать $3 вместо $2
-    }
-    statement_list RBRACE
-    {
-        in_false_if_block = false;
-    }
-    | {
+ {
         execute_command_list(); // Выполнить команды перед проверкой условия if
     }
     IF condition LBRACE 
@@ -144,9 +135,29 @@ if_else_statement:
     statement_list RBRACE
     {
         in_false_if_block = false;
+    } 
+    |
+    {
+        execute_command_list(); // Выполнить команды перед проверкой условия if
+    }
+    IF condition LBRACE 
+    {
+        in_false_if_block = !evaluate_condition($3); // Использовать $3 вместо $2
+    }
+    statement_list RBRACE
+    {
+        in_false_if_block = false;
     }
     ;
 
+variable_declaration:
+    INT_TYPE ID EQUAL INTEGER {
+        add_int_variable($2, $4);
+    }
+  | STRING_TYPE ID EQUAL STRING_VALUE {
+        add_string_variable($2, $4);
+    }
+  ;
 
 argument_list: expression
             | argument_list COMMA expression
