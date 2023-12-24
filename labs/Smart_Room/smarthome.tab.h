@@ -75,19 +75,23 @@ extern int yydebug;
     DOT = 276,                     /* DOT  */
     SET_TEMPERATURE = 277,         /* SET_TEMPERATURE  */
     PRINT = 278,                   /* PRINT  */
-    STRING_VALUE = 279,            /* STRING_VALUE  */
-    INT_TYPE = 280,                /* INT_TYPE  */
-    STRING_TYPE = 281,             /* STRING_TYPE  */
-    TURN_ON_LIGHT = 282,           /* TURN_ON_LIGHT  */
-    TURN_OFF_LIGHT = 283,          /* TURN_OFF_LIGHT  */
-    TURN_ON_BLINDS = 284,          /* TURN_ON_BLINDS  */
-    TURN_OFF_BLINDS = 285,         /* TURN_OFF_BLINDS  */
-    STATUS = 286,                  /* STATUS  */
-    GREATER = 287,                 /* GREATER  */
-    LESS = 288,                    /* LESS  */
-    EQUAL = 289,                   /* EQUAL  */
-    STRING = 290,                  /* STRING  */
-    ID = 291                       /* ID  */
+    PLUS = 279,                    /* PLUS  */
+    MINUS = 280,                   /* MINUS  */
+    MULTIPLY = 281,                /* MULTIPLY  */
+    DIVIDE = 282,                  /* DIVIDE  */
+    STRING_VALUE = 283,            /* STRING_VALUE  */
+    INT_TYPE = 284,                /* INT_TYPE  */
+    STRING_TYPE = 285,             /* STRING_TYPE  */
+    TURN_ON_LIGHT = 286,           /* TURN_ON_LIGHT  */
+    TURN_OFF_LIGHT = 287,          /* TURN_OFF_LIGHT  */
+    TURN_ON_BLINDS = 288,          /* TURN_ON_BLINDS  */
+    TURN_OFF_BLINDS = 289,         /* TURN_OFF_BLINDS  */
+    STATUS = 290,                  /* STATUS  */
+    GREATER = 291,                 /* GREATER  */
+    LESS = 292,                    /* LESS  */
+    EQUAL = 293,                   /* EQUAL  */
+    STRING = 294,                  /* STRING  */
+    ID = 295                       /* ID  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -106,7 +110,7 @@ union YYSTYPE
     Variable* varval;
     
 
-#line 110 "smarthome.tab.h"
+#line 114 "smarthome.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

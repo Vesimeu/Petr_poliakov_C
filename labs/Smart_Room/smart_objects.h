@@ -3,6 +3,7 @@
 #define SMART_OBJECTS_H
 #define MAX_OBJECTS 100 
 #define MAX_VARIABLES 50
+#include <stdbool.h>
 
 typedef struct {
     char name[50];
@@ -17,7 +18,10 @@ extern SmartObject* objects[MAX_OBJECTS];
 extern int objectCount;
 typedef void (*CommandFunction)(SmartObject* obj);
 
-typedef enum { INT, VAR_STRING_TYPE } VarType;
+typedef enum {
+    INT,
+    VAR_STRING_TYPE 
+} VarType;
 
 
 typedef struct {
@@ -28,6 +32,7 @@ typedef struct {
         char* str_value;
     };
 } Variable;
+
 
 extern Variable variables[MAX_VARIABLES];
 extern int variableCount;
@@ -84,6 +89,7 @@ int get_attribute_value(SmartObject* obj, const char* attribute_name);
 void turn_off_light(SmartObject* obj);
 void set_temperature(SmartObject* obj, int temperature);
 void turn_off_blinds(SmartObject* obj);
+int evaluate_expression(int left, char op, int right);
 void turn_on_blinds(SmartObject* obj);
 Condition* create_condition(int left_value, char* operator, int right_value);
 Condition* create_condition_attribute(SmartObject* object, const char* attribute_name, char* operator, int right_value);

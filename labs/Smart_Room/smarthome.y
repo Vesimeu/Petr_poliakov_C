@@ -39,7 +39,7 @@ void yyerror(const char* s);
 
 %token <intval> INTEGER 
 %token <objectval> CREATE_OBJECT IF ELSE TURN_ON TURN_OFF SET_VOLUME GRANT_ACCESS CURRENT_TIME SUNRISE_TIME SUNSET_TIME 
-%token COLON SEMICOLON LPAREN RPAREN LBRACE RBRACE COMMA DOT SET_TEMPERATURE PRINT
+%token COLON SEMICOLON LPAREN RPAREN LBRACE RBRACE COMMA DOT SET_TEMPERATURE PRINT PLUS MINUS MULTIPLY DIVIDE
 %token <strval> STRING_VALUE 
 %token INT_TYPE STRING_TYPE 
 %token <strval> TURN_ON_LIGHT TURN_OFF_LIGHT TURN_ON_BLINDS TURN_OFF_BLINDS STATUS GREATER LESS EQUAL STRING ID 
@@ -102,10 +102,17 @@ expression_statement: object DOT attribute_name LPAREN argument_list RPAREN SEMI
     execute_method($1, $3, $5); // Выполняем метод объекта
 }
 
+print_statement: PRINT LPAREN ID RPAREN { 
+                    Variable* var = get_variable($3);
+                    if (var != NULL) {
+                        print_variable(var);
+                    } else {
+                        fprintf(stderr, "Error: Variable '%s' not found\n", $3);
+                    }
+                }
+  | PRINT LPAREN attribute RPAREN {add_command_to_list(print_attribute, $3 , 0) ;}
+  ;
 
-print_statement: PRINT LPAREN attribute RPAREN {add_command_to_list(print_attribute, $3 , 0) ;}          
-                        
-;
 
 condition: LPAREN expression relation_operator expression RPAREN
   {
@@ -167,7 +174,37 @@ argument_list: expression
             ;
 
 expression: INTEGER
-          | ID
+          |   ID {
+                Variable* var = get_variable($1);
+                if (var != NULL) {
+                    if (var->type == INT) {
+                        $$ = var->int_value;
+                    } else {
+                        yyerror("Cannot perform arithmetic on string variable");
+                        $$ = 0;
+                    }
+                } else {
+                    yyerror("Variable not found");
+                    $$ = 0;
+                }
+            }
+          | expression PLUS expression {
+                $$ = $1 + $3;
+            }
+          | expression MINUS expression {
+                $$ = $1 - $3;
+            }
+          | expression MULTIPLY expression {
+                $$ = $1 * $3;
+            }
+          | expression DIVIDE expression {
+                if ($3 == 0) {
+                    yyerror("Division by zero");
+                    $$ = 0;
+                } else {
+                    $$ = $1 / $3;
+                }
+            }
           | time_expression
           | object DOT attribute_name LPAREN argument_list RPAREN { $$ = (SmartObject*)$1; }
           | attribute

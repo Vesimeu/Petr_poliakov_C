@@ -43,6 +43,10 @@ SmartObject* get_object(const char* name) {
 }
 
 
+
+// Это перменные 
+
+// Функции для работы с переменными
 void add_int_variable(const char* name, int value) {
     if (variableCount >= MAX_VARIABLES) {
         fprintf(stderr, "Превышено максимальное количество переменных\n");
@@ -54,20 +58,17 @@ void add_int_variable(const char* name, int value) {
     var->int_value = value;
 }
 
+// Функции, связанные с переменными
+
 void add_string_variable(const char* name, const char* value) {
-    // Аналогично для строки
-}
-
-void set_int_variable(const char* name, int value) {
-    // Поиск и изменение значения int переменной
-}
-
-void set_string_variable(const char* name, const char* value) {
-    // Поиск и изменение значения string переменной
-}
-
-Variable* get_variable(const char* name) {
-    // Поиск переменной по имени
+    if (variableCount >= MAX_VARIABLES) {
+        fprintf(stderr, "Превышено максимальное количество переменных\n");
+        return;
+    }
+    Variable* var = &variables[variableCount++];
+    strncpy(var->name, name, sizeof(var->name) - 1);
+    var->type = VAR_STRING_TYPE;
+    var->str_value = strdup(value); // Используйте strdup для копирования строки
 }
 
 void print_variable(Variable* var) {
@@ -79,6 +80,35 @@ void print_variable(Variable* var) {
 }
 
 
+void set_int_variable(const char* name, int value) {
+    for (int i = 0; i < variableCount; ++i) {
+        if (strcmp(variables[i].name, name) == 0 && variables[i].type == INT) {
+            variables[i].int_value = value;
+            return;
+        }
+    }
+    fprintf(stderr, "Int variable '%s' not found\n", name);
+}
+
+void set_string_variable(const char* name, const char* value) {
+    for (int i = 0; i < variableCount; ++i) {
+        if (strcmp(variables[i].name, name) == 0 && variables[i].type == VAR_STRING_TYPE) {
+            free(variables[i].str_value); // освободить старое значение
+            variables[i].str_value = strdup(value);
+            return;
+        }
+    }
+    fprintf(stderr, "String variable '%s' not found\n", name);
+}
+
+Variable* get_variable(const char* name) {
+    for (int i = 0; i < variableCount; ++i) {
+        if (strcmp(variables[i].name, name) == 0) {
+            return &variables[i];
+        }
+    }
+    return NULL;
+}
 
 
 void add_command_to_list(void (*execute)(SmartObject*, int), SmartObject* obj, int arg) {
@@ -316,6 +346,26 @@ Condition* create_condition_object(const char* object_name) {
 Condition* create_condition_time(const char* time_expression) {
     // Реализуйте создание условия для времени
 }
+
+// Функция для вычисления математических выражений
+int evaluate_expression(int left, char op, int right) {
+    switch(op) {
+        case '+': return left + right;
+        case '-': return left - right;
+        case '*': return left * right;
+        case '/': 
+            if (right == 0) {
+                fprintf(stderr, "Error: Division by zero\n");
+                exit(EXIT_FAILURE);
+            }
+            return left / right;
+        default:
+            fprintf(stderr, "Error: Unknown operator '%c'\n", op);
+            exit(EXIT_FAILURE);
+    }
+}
+
+
 
 Condition* create_condition_attribute(SmartObject* object, const char* attribute_name, char* operator, int right_value) {
     Condition* condition = (Condition*)malloc(sizeof(Condition));

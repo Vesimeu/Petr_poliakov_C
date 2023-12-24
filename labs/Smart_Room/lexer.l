@@ -13,9 +13,13 @@ struct SmartObject;
 [0-9]+                 { yylval.intval = atoi(yytext); return INTEGER; }
 "create_object"        { yylval.strval = strdup(yytext); return CREATE_OBJECT; }
 "if"                   { return IF; }
+"+"                   { return PLUS; }
+"-"                   { return MINUS; }
+"*"                   { return MULTIPLY; }
+"/"                   { return DIVIDE; }
 "int"                     { return INT_TYPE; }
 "string"                     { return STRING_TYPE; }
-"else"                 { return ELSSE; }
+"else"                 { return ELSE; }
 "turn_on_light"        { return TURN_ON_LIGHT; }  // Добавляем токен для команды включения света
 "turn_off_light"       { return TURN_OFF_LIGHT; }  // Добавляем токен для команды выключения света
 "turn_on_blinds"       { return TURN_ON_BLINDS; }  // Добавляем токен для команды включения жалюзи

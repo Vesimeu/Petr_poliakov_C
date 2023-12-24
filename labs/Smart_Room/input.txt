@@ -1,7 +1,9 @@
 create_object "LivingRoom";
 "LivingRoom".set_temperature(23);
+int A == 23;
+print(A);
 "LivingRoom".turn_on_light();
-if ("LivingRoom".temperature == 23) { 
+if (A == 23) { 
     "LivingRoom".turn_off_light();
     "LivingRoom".set_temperature(20);
 } else {
