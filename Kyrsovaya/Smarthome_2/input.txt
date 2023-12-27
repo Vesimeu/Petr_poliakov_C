@@ -1,0 +1,7 @@
+add_room "Room" end
+"Room"->set_conditioner(23) end
+"Room"->light_on() end
+"Room"->set_volume(10) end
+"Room"->info end
+"Room"->blinds_on() end
+print("Привет") end
