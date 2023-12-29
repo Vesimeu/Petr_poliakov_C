@@ -50,7 +50,7 @@ statement_list: statement
 
 
 statement: add_obj_statement END
-         | light_command END     // Добавляем новую команду для управления светом
+         | light_command END    
          | blinds_command END 
          | info_command END
          | set_conditioner END   
