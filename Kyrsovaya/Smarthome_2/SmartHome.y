@@ -57,13 +57,11 @@ statement: add_obj_statement END
          | set_volume_statement END
          | print_statement END
          ;
-// Вместо того чтобы использовать $1 в качестве значения атрибута объекта, создайте новый объект с использованием текущего объекта, а затем обновите текущий объект.
+
 add_obj_statement: ADD_OBJ STRING { $$ = add_obj($2); temp = $$; }
 ;
 
-// Обновим команды для управления светом
-
-            
+        
 light_command: object HAVE LIGHT_ON LPAREN RPAREN { 
                 add_command(turn_on_light, get_obj($1), 0); 
              }
