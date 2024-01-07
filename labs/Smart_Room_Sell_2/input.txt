@@ -1,0 +1,7 @@
+create_room "Room" ;
+"Room" > adjust_aircon(23) ;
+"Room" > activate_light() ;
+"Room" > set_audio_level(10) ;
+"Room" > info ;
+"Room" > open_blinds() ;
+print("Привет") ;
