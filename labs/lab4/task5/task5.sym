@@ -1,0 +1,15 @@
+// Symbol table
+// Scope level 0:
+//	Symbol Name       Page Address
+//	----------------  ------------
+//	OUTER_LOOP        3003
+//	INNER_LOOP        3006
+//	SWAP              300D
+//	INNER_LOOP_END    3011
+//	OUTER_LOOP_END    3019
+//	NUMBERS           301A
+//	LENGTH            301F
+
+
+
+

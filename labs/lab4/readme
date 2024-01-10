@@ -1,3 +1,4 @@
 export PATH=$PATH:/home/petr/git/Petr_poliakov_C/labs/lab4/lc3tools
 lc3as hello_world.asm
+
 lc3sim-tk hello_world.obj
