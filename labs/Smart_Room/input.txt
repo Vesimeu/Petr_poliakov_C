@@ -7,6 +7,9 @@ create_object "MyRoom";
 "MyRoom".set_temperature(20);
 int A == 3;
 print(5 * 5);
+int B == 20;
+print(B * 5);
+print(A + B);
 if ("LivingRoom".temperature == 23) {
     "LivingRoom".turn_on_light();
 }
@@ -16,5 +19,3 @@ else{
     "MyRoom".turn_on_light();
 }
 "MyRoom".status();
-A == 20;
-print(A * 5);
