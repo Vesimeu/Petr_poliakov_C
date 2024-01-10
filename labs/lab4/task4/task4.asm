@@ -1,75 +1,85 @@
 .ORIG x3000
 
-; Размер массива
-ARRAY_SIZE .FILL #5
+    LEA R0, PROMPT       
+    PUTS                
 
-; Задайте массив с пятью элементами (измените значения по вашему желанию)
-ARRAY .FILL #5
-      .FILL #2
-      .FILL #4
-      .FILL #1
-      .FILL #3
+    LEA R1, NUMBERS      
+    LEA R4, CONSTATEXP   
+    LD R2, COUNT        
 
-; Регистры
-R0 .BLKW #1     ; Используется для временного хранения данных
-R1 .BLKW #1     ; Используется для временного хранения данных
-R2 .BLKW #1     ; Используется для временного хранения данных
-R3 .BLKW #1     ; Используется для временного хранения данных
-R4 .BLKW #1     ; Используется для временного хранения данных
-R5 .BLKW #1     ; Используется для временного хранения данных
-R6 .BLKW #1     ; Используется для временного хранения данных
-R7 .BLKW #1     ; Используется для временного хранения данных
+READ
+    GETC                 
+    OUT                
+    STR R0, R4, #0       
+    ADD R4, R4, #1      
+    LD R3, NEG48        
+    ADD R0, R0, R3      
+    STR R0, R1, #0      
+    ADD R1, R1, #1      
+    ADD R2, R2, #-1      
+    BRp READ  
 
-; Инициализация массива и регистров
-        LD R0, ARRAY_SIZE     ; Загрузить размер массива в R0 (5 элементов)
-        LD R1, ARRAY          ; Загрузить адрес массива в R1
+    LEA R1, NUMBERS      
+    LD R2, COUNT        
+    ADD R2, R2, #-1     
 
-; Внешний цикл: проход по массиву
-OUTER   LD R2, R1, #0         ; Загрузить первый элемент массива в R2
-        LD R3, R1, #1         ; Загрузить второй элемент массива в R3
-        LD R4, R1, #2         ; Загрузить третий элемент массива в R4
-        LD R5, R1, #3         ; Загрузить четвертый элемент массива в R5
-        LD R6, R1, #4         ; Загрузить пятый элемент массива в R6
+SORTLOOP
+    LD R4, COUNT         
+    ADD R4, R4, #-1
+    LEA R3, NUMBERS      
 
-; Внутренний цикл: сравнение и обмен элементов
-INNER   ADD R7, R2, R3         ; Сложить первый и второй элементы
-        BRzp SKIP_SWAP        ; Если R7 положительный, пропустить обмен
-        ST R3, R2, #0         ; Обменить R2 и R3
-        ST R7, R2, #1         ; Обменить R2 и R7
-SKIP_SWAP
-        ADD R7, R3, R4         ; Сложить второй и третий элементы
-        BRzp SKIP_SWAP2       ; Если R7 положительный, пропустить обмен
-        ST R4, R3, #0         ; Обменить R3 и R4
-        ST R7, R3, #1         ; Обменить R3 и R7
-SKIP_SWAP2
-        ADD R7, R4, R5         ; Сложить третий и четвертый элементы
-        BRzp SKIP_SWAP3       ; Если R7 положительный, пропустить обмен
-        ST R5, R4, #0         ; Обменить R4 и R5
-        ST R7, R4, #1         ; Обменить R4 и R7
-SKIP_SWAP3
-        ADD R7, R5, R6         ; Сложить четвертый и пятый элементы
-        BRzp SKIP_SWAP4       ; Если R7 положительный, пропустить обмен
-        ST R6, R5, #0         ; Обменить R5 и R6
-        ST R7, R5, #1         ; Обменить R5 и R7
-SKIP_SWAP4
+INLOOP
+    LDR R0, R3, #0       
+    LDR R1, R3, #1       
+    NOT R5, R1
+    ADD R5, R5, #1
+    ADD R5, R0, R5       
+    BRn SWAP       
+    STR R1, R3, #0      
+    STR R0, R3, #1
 
-        ; Уменьшить R0 (размер массива)
-        ADD R0, R0, #-1
-        BRz DONE_SORT         ; Если R0 стал равным 0, завершить сортировку
+SWAP
+    ADD R3, R3, #1       
+    ADD R4, R4, #-1      
+    BRp INLOOP       
 
-        ; Перейти к следующей итерации внешнего цикла
-        ADD R1, R1, #1
-        BRnzp OUTER
+    ADD R2, R2, #-1      
+    BRp SORTLOOP        
+    LD R0, NEWLINE
+    OUT
 
-; Завершение программы
-DONE_SORT
-        HALT
+    LEA R1, ORIGINAL
+    LD R2, COUNT
 
-; Данные (вы можете изменить значения массива здесь)
-ARRAY .FILL #5
-      .FILL #2
-      .FILL #4
-      .FILL #1
-      .FILL #3
+OUTCONSTATEXP
+    LDR R0, R1, #0       
+    OUT                  
+    ADD R1, R1, #1       
+    ADD R2, R2, #-1      
+    BRp OUTCONSTATEXP 
 
+    LD R0, NEWLINE
+    OUT
+
+    LEA R1, NUMBERS
+    LD R2, COUNT
+
+OUTNUMBERS
+    LDR R0, R1, #0       
+    LD R3, POS48        
+    ADD R0, R0, R3       
+    OUT                  
+    ADD R1, R1, #1      
+    ADD R2, R2, #-1      
+    BRp OUTNUMBERS    
+
+    HALT                
+
+PROMPT .STRINGZ "Enter 10 numbers: "
+NUMBERS .BLKW 10       
+CONSTATEXP .BLKW 10       
+COUNT .FILL #10       
+NEG48 .FILL #-48      
+POS48 .FILL #48       
+NEWLINE .FILL x000A     
 .END

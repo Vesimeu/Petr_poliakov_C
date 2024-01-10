@@ -2,20 +2,16 @@
 // Scope level 0:
 //	Symbol Name       Page Address
 //	----------------  ------------
-//	ARRAY_SIZE        3000
-//	ARRAY             3001
-//	R0                3006
-//	R1                3007
-//	R2                3008
-//	R3                3009
-//	R4                300A
-//	R5                300B
-//	R6                300C
-//	R7                300D
-//	OUTER             3010
-//	INNER             3010
-//	SKIP_SWAP         3012
-//	SKIP_SWAP2        3014
-//	SKIP_SWAP3        3016
-//	SKIP_SWAP4        3018
-//	DONE_SORT         301C
+//	READ              3005
+//	SORTLOOP          3012
+//	INLOOP            3015
+//	SWAP              301D
+//	OUTCONSTATEXP     3026
+//	OUTNUMBERS        302F
+//	PROMPT            3037
+//	NUMBERS           304A
+//	CONSTATEXP        3054
+//	COUNT             305E
+//	NEG48             305F
+//	POS48             3060
+//	NEWLINE           3061
