@@ -35,8 +35,8 @@
    especially those whose name start with YY_ or yy_.  They are
    private implementation details that can be changed or removed.  */
 
-#ifndef YY_YY_UPDATED_SMARTHOME_TAB_H_INCLUDED
-# define YY_YY_UPDATED_SMARTHOME_TAB_H_INCLUDED
+#ifndef YY_YY_MYSMARTHOME_TAB_H_INCLUDED
+# define YY_YY_MYSMARTHOME_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -55,30 +55,29 @@ extern int yydebug;
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
     INTEGER = 258,                 /* INTEGER  */
-    ADD_ROOM = 259,                /* ADD_ROOM  */
-    TURN_ON = 260,                 /* TURN_ON  */
-    TURN_OFF = 261,                /* TURN_OFF  */
-    COLON = 262,                   /* COLON  */
-    LPAREN = 263,                  /* LPAREN  */
-    RPAREN = 264,                  /* RPAREN  */
-    LBRACE = 265,                  /* LBRACE  */
-    RBRACE = 266,                  /* RBRACE  */
-    COMMA = 267,                   /* COMMA  */
-    HAVE = 268,                    /* HAVE  */
-    PRINT = 269,                   /* PRINT  */
-    END = 270,                     /* END  */
-    ACTIVATE_LIGHT = 271,          /* ACTIVATE_LIGHT  */
-    DEACTIVATE_LIGHT = 272,        /* DEACTIVATE_LIGHT  */
-    OPEN_BLINDS = 273,             /* OPEN_BLINDS  */
-    CLOSE_BLINDS = 274,            /* CLOSE_BLINDS  */
-    INFO = 275,                    /* INFO  */
-    GREATER = 276,                 /* GREATER  */
-    LESS = 277,                    /* LESS  */
-    EQUAL = 278,                   /* EQUAL  */
-    STRING = 279,                  /* STRING  */
-    ID = 280,                      /* ID  */
-    SET_AUDIO_LEVEL = 281,         /* SET_AUDIO_LEVEL  */
-    ADJUST_AIRCON = 282            /* ADJUST_AIRCON  */
+    CREATE = 259,                  /* CREATE  */
+    COLON = 260,                   /* COLON  */
+    LPAREN = 261,                  /* LPAREN  */
+    RPAREN = 262,                  /* RPAREN  */
+    LBRACE = 263,                  /* LBRACE  */
+    RBRACE = 264,                  /* RBRACE  */
+    COMMA = 265,                   /* COMMA  */
+    SET = 266,                     /* SET  */
+    PRINT = 267,                   /* PRINT  */
+    ENDL = 268,                    /* ENDL  */
+    START = 269,                   /* START  */
+    LIGHT_ON = 270,                /* LIGHT_ON  */
+    LIGHT_OFF = 271,               /* LIGHT_OFF  */
+    BLINDS_ON = 272,               /* BLINDS_ON  */
+    BLINDS_OFF = 273,              /* BLINDS_OFF  */
+    INFO = 274,                    /* INFO  */
+    GREATER = 275,                 /* GREATER  */
+    LESS = 276,                    /* LESS  */
+    EQUAL = 277,                   /* EQUAL  */
+    STRING = 278,                  /* STRING  */
+    ID = 279,                      /* ID  */
+    SOUND = 280,                   /* SOUND  */
+    AIRCON = 281                   /* AIRCON  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -87,13 +86,13 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 28 "updated_SmartHome.y"
+#line 22 "MySmartHome.y"
 
     int intval;
     char* strval;
-    Device* objectval;
+    Home* objectval;
 
-#line 97 "updated_SmartHome.tab.h"
+#line 96 "MySmartHome.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -108,4 +107,4 @@ extern YYSTYPE yylval;
 int yyparse (void);
 
 
-#endif /* !YY_YY_UPDATED_SMARTHOME_TAB_H_INCLUDED  */
+#endif /* !YY_YY_MYSMARTHOME_TAB_H_INCLUDED  */

@@ -5,3 +5,9 @@ create_room "Room" ;
 "Room" > info ;
 "Room" > open_blinds() ;
 print("Привет") ;
+
+Home:create "Room" endl;
+Home:"Room" set aircon(23) endl;
+Home:"Room" set light.ON endl;
+Home:"Room" set sound(100) endl;
+Home:"Room" info endl; 

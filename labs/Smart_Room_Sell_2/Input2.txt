@@ -1,0 +1,8 @@
+Home:create "Room" endl;
+Home:"Room" set light_ON endl;
+Home:"Room" set aircon(23) endl;
+Home:"Room" set blinds_ON endl;
+Home:"Room" set sound(100) endl;
+Home:"Room" set aircon(18) endl;
+Home:"Room" information endl; 
+Home:print("hi") endl;
