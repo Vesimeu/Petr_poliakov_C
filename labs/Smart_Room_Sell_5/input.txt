@@ -1,1 +1,3 @@
+new_room "Kitchen";
 "Kitchen":set_light_mode(1);
+"Kitchen" : set_blinds_mode(1);

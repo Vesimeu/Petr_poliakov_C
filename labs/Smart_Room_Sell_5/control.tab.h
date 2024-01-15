@@ -67,17 +67,17 @@ extern int yydebug;
     START = 268,                   /* START  */
     PRINT = 269,                   /* PRINT  */
     END = 270,                     /* END  */
-    SET_LIGHT_MODE = 271,          /* SET_LIGHT_MODE  */
-    OPEN_BLINDS = 272,             /* OPEN_BLINDS  */
-    CLOSE_BLINDS = 273,            /* CLOSE_BLINDS  */
-    INFO = 274,                    /* INFO  */
-    GREATER = 275,                 /* GREATER  */
-    LESS = 276,                    /* LESS  */
-    EQUAL = 277,                   /* EQUAL  */
-    STRING = 278,                  /* STRING  */
-    ID = 279,                      /* ID  */
-    SET_AUDIO_LEVEL = 280,         /* SET_AUDIO_LEVEL  */
-    ADJUST_AIRCON = 281            /* ADJUST_AIRCON  */
+    AND = 271,                     /* AND  */
+    SET_AUDIO_LEVEL = 272,         /* SET_AUDIO_LEVEL  */
+    SET_TEMPERATURE = 273,         /* SET_TEMPERATURE  */
+    SET_LIGHT_MODE = 274,          /* SET_LIGHT_MODE  */
+    SET_BLINDS_MODE = 275,         /* SET_BLINDS_MODE  */
+    INFO = 276,                    /* INFO  */
+    GREATER = 277,                 /* GREATER  */
+    LESS = 278,                    /* LESS  */
+    EQUAL = 279,                   /* EQUAL  */
+    STRING = 280,                  /* STRING  */
+    ID = 281                       /* ID  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif

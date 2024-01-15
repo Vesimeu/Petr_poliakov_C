@@ -108,14 +108,14 @@ void set_light_mode(Device* obj, int mode) {
     }
 }
 
-void turn_on_light(Device* obj) {
-    obj->light = 1;
-    printf("Освещение в %s теперь светит ярко!\n", obj->name);
-}
-
-void turn_off_light(Device* obj) {
-    obj->light = 0;
-    printf("В %s теперь темно, свет выключен.\n", obj->name);
+void set_blinds_mode(Device* obj, int mode) {
+    if (mode) {  // Если mode равно 1 (или true), закрыть занавески
+        obj->blinds = 1;
+        printf("В %s зановески закрыты для уюта.\n", obj->name);
+    } else {  // Если mode равно 0 (или false), открыть занавески
+        obj->blinds = 0;
+        printf("В %s зановески открыты, впуская свет!\n", obj->name);
+    }
 }
 
 void adjust_aircon(Device* obj, int aircon) {
@@ -130,14 +130,4 @@ void set_audio_level(Device* obj, int value) {
     } else {
         printf("В %s уровень звука установлен на %d.\n", obj->name, value);
     }
-}
-
-void turn_on_shades(Device* obj) {
-    obj->blinds = 1;
-    printf("В %s зановески закрыты для уюта.\n", obj->name);
-}
-
-void turn_off_shades(Device* obj) {
-    obj->blinds = 0;
-    printf("В %s зановески открыты, впуская свет!\n", obj->name);
 }

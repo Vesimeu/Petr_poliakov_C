@@ -30,47 +30,49 @@ void yyerror(const char* s);
 
 %token <intval> INTEGER 
 %token <objectval> ADD_ROOM TURN_ON TURN_OFF 
-%token COLON LPAREN RPAREN LBRACE RBRACE COMMA START PRINT END
-%token <strval> SET_LIGHT_MODE OPEN_BLINDS CLOSE_BLINDS INFO GREATER LESS EQUAL STRING ID SET_AUDIO_LEVEL ADJUST_AIRCON
+%token COLON LPAREN RPAREN LBRACE RBRACE COMMA START PRINT END AND
+%token <strval> SET_AUDIO_LEVEL SET_TEMPERATURE SET_LIGHT_MODE SET_BLINDS_MODE INFO GREATER LESS EQUAL STRING ID
 %type <strval> message_name 
 %type <objectval> add_obj_statement light_command blinds_command info_command object 
 %%
 
 
 program: statement_list
-        ;
+       ;
 
 statement_list: statement
               | statement_list statement
               ;
-
-
-statement: add_obj_statement END
-         | light_command END     
-         | blinds_command END 
-         | info_command END
-         | set_conditioner END   
-         | set_volume_statement END
-         | print_statement END
+statement: command_sequence END
          ;
 
-add_obj_statement: ADD_ROOM STRING { $$ = create_device($2); temp = $$; }
+command_sequence: command
+                | command_sequence AND command
+                ;
+
+command: add_obj_statement
+         | light_command 
+         | blinds_command
+         | info_command 
+         | set_conditioner   
+         | set_volume_statement 
+         | print_statement 
 ;
 
 
-            
+add_obj_statement: ADD_ROOM STRING { $$ = create_device($2); temp = $$; }
+;
+   
 light_command: object START SET_LIGHT_MODE LPAREN INTEGER RPAREN { 
                 enqueue_action(set_light_mode, get_device($1), $5); 
-             } 
+             } ;
           
     
-blinds_command: object START OPEN_BLINDS LPAREN RPAREN { enqueue_action(turn_on_shades, get_device($1), 0); }
-             | object START CLOSE_BLINDS LPAREN RPAREN { enqueue_action(turn_off_shades, get_device($1), 0); }
-             ;
+blinds_command: object START SET_BLINDS_MODE LPAREN INTEGER RPAREN { 
+                enqueue_action(set_blinds_mode, get_device($1), $5); 
+             } ;
 
-
-
-set_conditioner: object START ADJUST_AIRCON LPAREN INTEGER RPAREN { enqueue_action(adjust_aircon, temp, $5) ;};
+set_conditioner: object START SET_TEMPERATURE LPAREN INTEGER RPAREN { enqueue_action(adjust_aircon, temp, $5) ;};
 
 
 set_volume_statement: object START SET_AUDIO_LEVEL LPAREN INTEGER RPAREN { enqueue_action(set_audio_level, temp, $5) ;};

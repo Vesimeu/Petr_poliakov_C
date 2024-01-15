@@ -43,13 +43,10 @@ Device* create_device(const char* name);
 void execute_actions();
 void set_light_mode(Device* obj, int mode) ;//status light
 void print_message(const char* message);
-// void turn_on_light(Device* obj);
 void print_atribute_room(Device* obj);
 int get_attribute_value(Device* obj, const char* attribute_name);
-// void turn_off_light(Device* obj);
 void adjust_aircon(Device* obj, int temperature);
-void turn_off_shades(Device* obj);
-void turn_on_shades(Device* obj);
+void set_blinds_mode(Device* obj, int mode) ; //status blinds
 
 
 
