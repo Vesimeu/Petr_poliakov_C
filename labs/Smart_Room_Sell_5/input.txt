@@ -1,0 +1,1 @@
+"Kitchen":set_light_mode(1);
