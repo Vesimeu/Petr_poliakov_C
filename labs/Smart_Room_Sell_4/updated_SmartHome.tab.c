@@ -545,8 +545,8 @@ static const yytype_int8 yytranslate[] =
 static const yytype_int8 yyrline[] =
 {
        0,    44,    44,    47,    48,    52,    53,    54,    55,    56,
-      57,    58,    61,    67,    70,    76,    77,    82,    85,    88,
-      91,    94,    97
+      57,    58,    61,    66,    69,    75,    76,    81,    84,    87,
+      90,    93,    96
 };
 #endif
 
@@ -1142,7 +1142,7 @@ yyreduce:
     break;
 
   case 13: /* light_command: object HAVE ACTIVATE_LIGHT LPAREN RPAREN  */
-#line 67 "updated_SmartHome.y"
+#line 66 "updated_SmartHome.y"
                                                         { 
                 enqueue_action(turn_on_light, get_device((yyvsp[-4].objectval)), 0); 
              }
@@ -1150,7 +1150,7 @@ yyreduce:
     break;
 
   case 14: /* light_command: object HAVE DEACTIVATE_LIGHT LPAREN RPAREN  */
-#line 70 "updated_SmartHome.y"
+#line 69 "updated_SmartHome.y"
                                                           { 
                 enqueue_action(turn_off_light, get_device((yyvsp[-4].objectval)), 0); 
              }
@@ -1158,43 +1158,43 @@ yyreduce:
     break;
 
   case 15: /* blinds_command: object HAVE OPEN_BLINDS LPAREN RPAREN  */
-#line 76 "updated_SmartHome.y"
+#line 75 "updated_SmartHome.y"
                                                       { enqueue_action(turn_on_shades, get_device((yyvsp[-4].objectval)), 0); }
 #line 1164 "updated_SmartHome.tab.c"
     break;
 
   case 16: /* blinds_command: object HAVE CLOSE_BLINDS LPAREN RPAREN  */
-#line 77 "updated_SmartHome.y"
+#line 76 "updated_SmartHome.y"
                                                       { enqueue_action(turn_off_shades, get_device((yyvsp[-4].objectval)), 0); }
 #line 1170 "updated_SmartHome.tab.c"
     break;
 
   case 17: /* set_conditioner: object HAVE ADJUST_AIRCON LPAREN INTEGER RPAREN  */
-#line 82 "updated_SmartHome.y"
+#line 81 "updated_SmartHome.y"
                                                                  { enqueue_action(adjust_aircon, temp, (yyvsp[-1].intval)) ;}
 #line 1176 "updated_SmartHome.tab.c"
     break;
 
   case 18: /* set_volume_statement: object HAVE SET_AUDIO_LEVEL LPAREN INTEGER RPAREN  */
-#line 85 "updated_SmartHome.y"
+#line 84 "updated_SmartHome.y"
                                                                         { enqueue_action(set_audio_level, temp, (yyvsp[-1].intval)) ;}
 #line 1182 "updated_SmartHome.tab.c"
     break;
 
   case 19: /* info_command: object HAVE INFO  */
-#line 88 "updated_SmartHome.y"
+#line 87 "updated_SmartHome.y"
                                {enqueue_action(print_atribute_room, get_device((yyvsp[-2].objectval)), 0) ; }
 #line 1188 "updated_SmartHome.tab.c"
     break;
 
   case 20: /* print_statement: PRINT LPAREN message_name RPAREN  */
-#line 91 "updated_SmartHome.y"
+#line 90 "updated_SmartHome.y"
                                                   {enqueue_action(print_message, (yyvsp[-1].strval) , 0) ;}
 #line 1194 "updated_SmartHome.tab.c"
     break;
 
   case 21: /* object: STRING  */
-#line 94 "updated_SmartHome.y"
+#line 93 "updated_SmartHome.y"
                { (yyval.objectval) = get_device((yyvsp[0].strval)); }
 #line 1200 "updated_SmartHome.tab.c"
     break;
@@ -1393,7 +1393,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 100 "updated_SmartHome.y"
+#line 99 "updated_SmartHome.y"
 
 
 void yyerror(const char* s) {
