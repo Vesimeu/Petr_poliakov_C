@@ -72,12 +72,13 @@ extern int yydebug;
     SET_TEMPERATURE = 273,         /* SET_TEMPERATURE  */
     SET_LIGHT_MODE = 274,          /* SET_LIGHT_MODE  */
     SET_BLINDS_MODE = 275,         /* SET_BLINDS_MODE  */
-    INFO = 276,                    /* INFO  */
-    GREATER = 277,                 /* GREATER  */
-    LESS = 278,                    /* LESS  */
-    EQUAL = 279,                   /* EQUAL  */
-    STRING = 280,                  /* STRING  */
-    ID = 281                       /* ID  */
+    SET_SAFE_MODE = 276,           /* SET_SAFE_MODE  */
+    INFO = 277,                    /* INFO  */
+    GREATER = 278,                 /* GREATER  */
+    LESS = 279,                    /* LESS  */
+    EQUAL = 280,                   /* EQUAL  */
+    STRING = 281,                  /* STRING  */
+    ID = 282                       /* ID  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -90,9 +91,9 @@ union YYSTYPE
 
     int intval;
     char* strval;
-    Device* objectval;
+    Room* objectval;
 
-#line 96 "control.tab.h"
+#line 97 "control.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

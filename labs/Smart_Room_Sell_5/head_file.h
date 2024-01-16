@@ -10,43 +10,44 @@ typedef struct {
     int aircon; 
     int volume;
     int blinds; 
-} Device;
+    int safe; //system 
+} Room;
 
-extern Device* devices[MAX_OBJECTS];
+extern Room* devices[MAX_OBJECTS];
 extern int deviceCount;
-typedef void (*ActionFunction)(Device* obj);
+typedef void (*ActionFunction)(Room* obj);
 
 
-typedef struct Action {
-    void (*execute)(Device*, int);  
-    Device* object;               
+typedef struct Command {
+    void (*execute)(Room*, int);  
+    Room* object;               
     int arg;                            
-} Action;
+} Command;
 
 typedef struct ActionList {
-    Action* commands; 
+    Command* commands; 
     int count; 
 } ActionList;
 
 
 
-extern Device* temp;
+extern Room* temp;
 
 
-void enqueue_action(void (*execute)(Device*, int), Device* obj, int arg);
-void set_audio_level(Device* obj, int value);
-Device* get_device(const char* name);
-void execute_block(const char* command, Device* obj);
-void enqueue_action_to_list(void (*execute)(Device*, int), Device* obj, int arg);
-void status_ast(Device* obj);
-Device* create_device(const char* name);
+void enqueue_action(void (*execute)(Room*, int), Room* obj, int arg);
+void set_audio_level(Room* obj, int value);
+void execute_block(const char* command, Room* obj);
+void enqueue_action_to_list(void (*execute)(Room*, int), Room* obj, int arg);
+void status_ast(Room* obj);
+Room* create_device(const char* name);
 void execute_actions();
-void set_light_mode(Device* obj, int mode) ;//status light
+void set_light_mode(Room* obj, int mode) ;//status light
 void print_message(const char* message);
-void print_atribute_room(Device* obj);
-int get_attribute_value(Device* obj, const char* attribute_name);
-void adjust_aircon(Device* obj, int temperature);
-void set_blinds_mode(Device* obj, int mode) ; //status blinds
+void print_information_room(Room* obj);
+void set_safe_mode(Room* obj, int mode); 
+int get_attribute_value(Room* obj, const char* attribute_name);
+void set_temperature(Room* obj, int aircon);
+void set_blinds_mode(Room* obj, int mode) ; //status blinds
 
 
 

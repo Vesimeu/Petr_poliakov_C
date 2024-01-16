@@ -12,7 +12,8 @@
 "new_room"       { yylval.strval = strdup(yytext); return ADD_ROOM; }
 "set_light_mode"          { return SET_LIGHT_MODE; }
 "set_blinds_mode"          { return SET_BLINDS_MODE;}
-"info"               { return INFO; } 
+"set_safe_mode"          { return SET_SAFE_MODE;}
+"display_mode"               { return INFO; } 
 "set_temperature"      { return SET_TEMPERATURE; }
 "set_audio_level"      { return SET_AUDIO_LEVEL ; } 
 "print"                 { return PRINT; }

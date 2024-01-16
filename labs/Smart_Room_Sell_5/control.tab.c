@@ -80,8 +80,8 @@ extern FILE* yyin;
 extern int yylex();
 extern char* yytext;
 
-struct Device;
-Device* temp = NULL;  // хранения объекта
+struct Room;
+Room* temp = NULL;  // хранения объекта
 ActionList* current_command_list = NULL; // текущего списка команд
 void yyerror(const char* s);
 
@@ -135,27 +135,29 @@ enum yysymbol_kind_t
   YYSYMBOL_SET_TEMPERATURE = 18,           /* SET_TEMPERATURE  */
   YYSYMBOL_SET_LIGHT_MODE = 19,            /* SET_LIGHT_MODE  */
   YYSYMBOL_SET_BLINDS_MODE = 20,           /* SET_BLINDS_MODE  */
-  YYSYMBOL_INFO = 21,                      /* INFO  */
-  YYSYMBOL_GREATER = 22,                   /* GREATER  */
-  YYSYMBOL_LESS = 23,                      /* LESS  */
-  YYSYMBOL_EQUAL = 24,                     /* EQUAL  */
-  YYSYMBOL_STRING = 25,                    /* STRING  */
-  YYSYMBOL_ID = 26,                        /* ID  */
-  YYSYMBOL_YYACCEPT = 27,                  /* $accept  */
-  YYSYMBOL_program = 28,                   /* program  */
-  YYSYMBOL_statement_list = 29,            /* statement_list  */
-  YYSYMBOL_statement = 30,                 /* statement  */
-  YYSYMBOL_command_sequence = 31,          /* command_sequence  */
-  YYSYMBOL_command = 32,                   /* command  */
-  YYSYMBOL_add_obj_statement = 33,         /* add_obj_statement  */
-  YYSYMBOL_light_command = 34,             /* light_command  */
-  YYSYMBOL_blinds_command = 35,            /* blinds_command  */
-  YYSYMBOL_set_conditioner = 36,           /* set_conditioner  */
-  YYSYMBOL_set_volume_statement = 37,      /* set_volume_statement  */
-  YYSYMBOL_info_command = 38,              /* info_command  */
-  YYSYMBOL_print_statement = 39,           /* print_statement  */
-  YYSYMBOL_object = 40,                    /* object  */
-  YYSYMBOL_message_name = 41               /* message_name  */
+  YYSYMBOL_SET_SAFE_MODE = 21,             /* SET_SAFE_MODE  */
+  YYSYMBOL_INFO = 22,                      /* INFO  */
+  YYSYMBOL_GREATER = 23,                   /* GREATER  */
+  YYSYMBOL_LESS = 24,                      /* LESS  */
+  YYSYMBOL_EQUAL = 25,                     /* EQUAL  */
+  YYSYMBOL_STRING = 26,                    /* STRING  */
+  YYSYMBOL_ID = 27,                        /* ID  */
+  YYSYMBOL_YYACCEPT = 28,                  /* $accept  */
+  YYSYMBOL_program = 29,                   /* program  */
+  YYSYMBOL_statement_list = 30,            /* statement_list  */
+  YYSYMBOL_statement = 31,                 /* statement  */
+  YYSYMBOL_command_sequence = 32,          /* command_sequence  */
+  YYSYMBOL_command = 33,                   /* command  */
+  YYSYMBOL_add_obj_statement = 34,         /* add_obj_statement  */
+  YYSYMBOL_safe_command = 35,              /* safe_command  */
+  YYSYMBOL_light_command = 36,             /* light_command  */
+  YYSYMBOL_blinds_command = 37,            /* blinds_command  */
+  YYSYMBOL_set_conditioner = 38,           /* set_conditioner  */
+  YYSYMBOL_set_volume_statement = 39,      /* set_volume_statement  */
+  YYSYMBOL_display_coomand = 40,           /* display_coomand  */
+  YYSYMBOL_print_statement = 41,           /* print_statement  */
+  YYSYMBOL_ROOM = 42,                      /* ROOM  */
+  YYSYMBOL_message_name = 43               /* message_name  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -481,21 +483,21 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  19
+#define YYFINAL  20
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   31
+#define YYLAST   35
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  27
+#define YYNTOKENS  28
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  15
+#define YYNNTS  16
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  23
+#define YYNRULES  25
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  45
+#define YYNSTATES  50
 
 /* YYMAXUTOK -- Last valid token kind.  */
-#define YYMAXUTOK   281
+#define YYMAXUTOK   282
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
@@ -537,7 +539,7 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
       15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
-      25,    26
+      25,    26,    27
 };
 
 #if YYDEBUG
@@ -545,8 +547,8 @@ static const yytype_int8 yytranslate[] =
 static const yytype_int8 yyrline[] =
 {
        0,    40,    40,    43,    44,    46,    49,    50,    53,    54,
-      55,    56,    57,    58,    59,    63,    66,    71,    75,    78,
-      81,    84,    87,    90
+      55,    56,    57,    58,    59,    60,    64,    67,    72,    77,
+      81,    84,    87,    90,    93,    96
 };
 #endif
 
@@ -565,12 +567,12 @@ static const char *const yytname[] =
   "\"end of file\"", "error", "\"invalid token\"", "INTEGER", "ADD_ROOM",
   "TURN_ON", "TURN_OFF", "COLON", "LPAREN", "RPAREN", "LBRACE", "RBRACE",
   "COMMA", "START", "PRINT", "END", "AND", "SET_AUDIO_LEVEL",
-  "SET_TEMPERATURE", "SET_LIGHT_MODE", "SET_BLINDS_MODE", "INFO",
-  "GREATER", "LESS", "EQUAL", "STRING", "ID", "$accept", "program",
+  "SET_TEMPERATURE", "SET_LIGHT_MODE", "SET_BLINDS_MODE", "SET_SAFE_MODE",
+  "INFO", "GREATER", "LESS", "EQUAL", "STRING", "ID", "$accept", "program",
   "statement_list", "statement", "command_sequence", "command",
-  "add_obj_statement", "light_command", "blinds_command",
-  "set_conditioner", "set_volume_statement", "info_command",
-  "print_statement", "object", "message_name", YY_NULLPTR
+  "add_obj_statement", "safe_command", "light_command", "blinds_command",
+  "set_conditioner", "set_volume_statement", "display_coomand",
+  "print_statement", "ROOM", "message_name", YY_NULLPTR
 };
 
 static const char *
@@ -594,11 +596,11 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -4,   -17,     1,   -18,    11,    -4,   -18,    -9,   -18,   -18,
-     -18,   -18,   -18,   -18,   -18,   -18,    -1,   -18,   -12,   -18,
-     -18,   -18,    -4,   -16,   -18,     5,   -18,     7,     8,     9,
-      10,   -18,   -18,    16,    17,    19,    20,    15,    18,    21,
-      22,   -18,   -18,   -18,   -18
+      -4,   -17,     3,   -18,    12,    -4,   -18,    -8,   -18,   -18,
+     -18,   -18,   -18,   -18,   -18,   -18,   -18,     0,   -18,   -12,
+     -18,   -18,   -18,    -4,   -16,   -18,     6,   -18,     8,     9,
+      10,    11,    13,   -18,   -18,    17,    20,    21,    22,    23,
+      18,    19,    24,    25,    26,   -18,   -18,   -18,   -18,   -18
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -606,25 +608,25 @@ static const yytype_int8 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,     0,     0,    22,     0,     2,     3,     0,     6,     8,
-       9,    10,    12,    13,    11,    14,     0,    15,     0,     1,
-       4,     5,     0,     0,    23,     0,     7,     0,     0,     0,
-       0,    20,    21,     0,     0,     0,     0,     0,     0,     0,
-       0,    19,    18,    16,    17
+       0,     0,     0,    24,     0,     2,     3,     0,     6,     8,
+      11,     9,    10,    13,    14,    12,    15,     0,    16,     0,
+       1,     4,     5,     0,     0,    25,     0,     7,     0,     0,
+       0,     0,     0,    22,    23,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,    21,    20,    18,    19,    17
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -18,   -18,   -18,    23,   -18,     3,   -18,   -18,   -18,   -18,
-     -18,   -18,   -18,   -18,   -18
+     -18,   -18,   -18,    27,   -18,     7,   -18,   -18,   -18,   -18,
+     -18,   -18,   -18,   -18,   -18,   -18
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
        0,     4,     5,     6,     7,     8,     9,    10,    11,    12,
-      13,    14,    15,    16,    25
+      13,    14,    15,    16,    17,    26
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -632,45 +634,45 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-       1,    27,    28,    29,    30,    31,    21,    22,    17,    18,
-       2,    19,    23,    24,    32,    33,    34,    35,    36,    37,
-      38,     3,    39,    40,    41,    26,     0,    42,    20,     0,
-      43,    44
+       1,    28,    29,    30,    31,    32,    33,    22,    23,    18,
+       2,    19,    20,    24,    25,    34,    35,    36,    37,    38,
+      40,    39,     3,    41,    42,    43,    44,    45,    46,     0,
+      27,     0,    21,    47,    48,    49
 };
 
 static const yytype_int8 yycheck[] =
 {
-       4,    17,    18,    19,    20,    21,    15,    16,    25,     8,
-      14,     0,    13,    25,     9,     8,     8,     8,     8,     3,
-       3,    25,     3,     3,     9,    22,    -1,     9,     5,    -1,
-       9,     9
+       4,    17,    18,    19,    20,    21,    22,    15,    16,    26,
+      14,     8,     0,    13,    26,     9,     8,     8,     8,     8,
+       3,     8,    26,     3,     3,     3,     3,     9,     9,    -1,
+      23,    -1,     5,     9,     9,     9
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     4,    14,    25,    28,    29,    30,    31,    32,    33,
-      34,    35,    36,    37,    38,    39,    40,    25,     8,     0,
-      30,    15,    16,    13,    25,    41,    32,    17,    18,    19,
-      20,    21,     9,     8,     8,     8,     8,     3,     3,     3,
-       3,     9,     9,     9,     9
+       0,     4,    14,    26,    29,    30,    31,    32,    33,    34,
+      35,    36,    37,    38,    39,    40,    41,    42,    26,     8,
+       0,    31,    15,    16,    13,    26,    43,    33,    17,    18,
+      19,    20,    21,    22,     9,     8,     8,     8,     8,     8,
+       3,     3,     3,     3,     3,     9,     9,     9,     9,     9
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    27,    28,    29,    29,    30,    31,    31,    32,    32,
-      32,    32,    32,    32,    32,    33,    34,    35,    36,    37,
-      38,    39,    40,    41
+       0,    28,    29,    30,    30,    31,    32,    32,    33,    33,
+      33,    33,    33,    33,    33,    33,    34,    35,    36,    37,
+      38,    39,    40,    41,    42,    43
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
        0,     2,     1,     1,     2,     2,     1,     3,     1,     1,
-       1,     1,     1,     1,     1,     2,     6,     6,     6,     6,
-       3,     4,     1,     1
+       1,     1,     1,     1,     1,     1,     2,     6,     6,     6,
+       6,     6,     3,     4,     1,     1
 };
 
 
@@ -1133,60 +1135,68 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-  case 15: /* add_obj_statement: ADD_ROOM STRING  */
-#line 63 "control.y"
+  case 16: /* add_obj_statement: ADD_ROOM STRING  */
+#line 64 "control.y"
                                    { (yyval.objectval) = create_device((yyvsp[0].strval)); temp = (yyval.objectval); }
-#line 1140 "control.tab.c"
+#line 1142 "control.tab.c"
     break;
 
-  case 16: /* light_command: object START SET_LIGHT_MODE LPAREN INTEGER RPAREN  */
-#line 66 "control.y"
+  case 17: /* safe_command: ROOM START SET_SAFE_MODE LPAREN INTEGER RPAREN  */
+#line 67 "control.y"
+                                                             { 
+                enqueue_action(set_safe_mode, temp, (yyvsp[-1].intval)); 
+             }
+#line 1150 "control.tab.c"
+    break;
+
+  case 18: /* light_command: ROOM START SET_LIGHT_MODE LPAREN INTEGER RPAREN  */
+#line 72 "control.y"
+                                                               { 
+                enqueue_action(set_light_mode, temp, (yyvsp[-1].intval)); 
+             }
+#line 1158 "control.tab.c"
+    break;
+
+  case 19: /* blinds_command: ROOM START SET_BLINDS_MODE LPAREN INTEGER RPAREN  */
+#line 77 "control.y"
                                                                  { 
-                enqueue_action(set_light_mode, get_device((yyvsp[-5].objectval)), (yyvsp[-1].intval)); 
+                enqueue_action(set_blinds_mode, temp, (yyvsp[-1].intval)); 
              }
-#line 1148 "control.tab.c"
+#line 1166 "control.tab.c"
     break;
 
-  case 17: /* blinds_command: object START SET_BLINDS_MODE LPAREN INTEGER RPAREN  */
-#line 71 "control.y"
-                                                                   { 
-                enqueue_action(set_blinds_mode, get_device((yyvsp[-5].objectval)), (yyvsp[-1].intval)); 
-             }
-#line 1156 "control.tab.c"
-    break;
-
-  case 18: /* set_conditioner: object START SET_TEMPERATURE LPAREN INTEGER RPAREN  */
-#line 75 "control.y"
-                                                                    { enqueue_action(adjust_aircon, temp, (yyvsp[-1].intval)) ;}
-#line 1162 "control.tab.c"
-    break;
-
-  case 19: /* set_volume_statement: object START SET_AUDIO_LEVEL LPAREN INTEGER RPAREN  */
-#line 78 "control.y"
-                                                                         { enqueue_action(set_audio_level, temp, (yyvsp[-1].intval)) ;}
-#line 1168 "control.tab.c"
-    break;
-
-  case 20: /* info_command: object START INFO  */
+  case 20: /* set_conditioner: ROOM START SET_TEMPERATURE LPAREN INTEGER RPAREN  */
 #line 81 "control.y"
-                                {enqueue_action(print_atribute_room, get_device((yyvsp[-2].objectval)), 0) ; }
-#line 1174 "control.tab.c"
+                                                                  { enqueue_action(set_temperature, temp, (yyvsp[-1].intval)) ;}
+#line 1172 "control.tab.c"
     break;
 
-  case 21: /* print_statement: PRINT LPAREN message_name RPAREN  */
+  case 21: /* set_volume_statement: ROOM START SET_AUDIO_LEVEL LPAREN INTEGER RPAREN  */
 #line 84 "control.y"
-                                                  {enqueue_action(print_message, (yyvsp[-1].strval) , 0) ;}
-#line 1180 "control.tab.c"
+                                                                       { enqueue_action(set_audio_level, temp, (yyvsp[-1].intval)) ;}
+#line 1178 "control.tab.c"
     break;
 
-  case 22: /* object: STRING  */
+  case 22: /* display_coomand: ROOM START INFO  */
 #line 87 "control.y"
-               { (yyval.objectval) = get_device((yyvsp[0].strval)); }
-#line 1186 "control.tab.c"
+                                 {enqueue_action(print_information_room, temp, 0) ; }
+#line 1184 "control.tab.c"
+    break;
+
+  case 23: /* print_statement: PRINT LPAREN message_name RPAREN  */
+#line 90 "control.y"
+                                                  {enqueue_action(print_message, (yyvsp[-1].strval) , 0) ;}
+#line 1190 "control.tab.c"
+    break;
+
+  case 24: /* ROOM: STRING  */
+#line 93 "control.y"
+             { (yyval.objectval) = temp; }
+#line 1196 "control.tab.c"
     break;
 
 
-#line 1190 "control.tab.c"
+#line 1200 "control.tab.c"
 
       default: break;
     }
@@ -1379,7 +1389,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 93 "control.y"
+#line 99 "control.y"
 
 
 void yyerror(const char* s) {
@@ -1401,7 +1411,7 @@ int main(int argc, char* argv[]) {
 
     yyin = input_file;
 
-    Device* obj = NULL; 
+    Room* obj = NULL; 
 
     yyparse();
     execute_actions();

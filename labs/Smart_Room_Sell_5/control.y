@@ -10,8 +10,8 @@ extern FILE* yyin;
 extern int yylex();
 extern char* yytext;
 
-struct Device;
-Device* temp = NULL;  // хранения объекта
+struct Room;
+Room* temp = NULL;  // хранения объекта
 ActionList* current_command_list = NULL; // текущего списка команд
 void yyerror(const char* s);
 
@@ -24,16 +24,16 @@ void yyerror(const char* s);
 %union {
     int intval;
     char* strval;
-    Device* objectval;
+    Room* objectval;
 }
 
 
 %token <intval> INTEGER 
 %token <objectval> ADD_ROOM TURN_ON TURN_OFF 
 %token COLON LPAREN RPAREN LBRACE RBRACE COMMA START PRINT END AND
-%token <strval> SET_AUDIO_LEVEL SET_TEMPERATURE SET_LIGHT_MODE SET_BLINDS_MODE INFO GREATER LESS EQUAL STRING ID
+%token <strval> SET_AUDIO_LEVEL SET_TEMPERATURE SET_LIGHT_MODE SET_BLINDS_MODE SET_SAFE_MODE INFO GREATER LESS EQUAL STRING ID
 %type <strval> message_name 
-%type <objectval> add_obj_statement light_command blinds_command info_command object 
+%type <objectval> add_obj_statement light_command blinds_command display_coomand ROOM 
 %%
 
 
@@ -53,7 +53,8 @@ command_sequence: command
 command: add_obj_statement
          | light_command 
          | blinds_command
-         | info_command 
+         | safe_command
+         | display_coomand 
          | set_conditioner   
          | set_volume_statement 
          | print_statement 
@@ -62,29 +63,34 @@ command: add_obj_statement
 
 add_obj_statement: ADD_ROOM STRING { $$ = create_device($2); temp = $$; }
 ;
-   
-light_command: object START SET_LIGHT_MODE LPAREN INTEGER RPAREN { 
-                enqueue_action(set_light_mode, get_device($1), $5); 
+
+safe_command: ROOM START SET_SAFE_MODE LPAREN INTEGER RPAREN { 
+                enqueue_action(set_safe_mode, temp, $5); 
+             } ;
+          
+
+light_command: ROOM START SET_LIGHT_MODE LPAREN INTEGER RPAREN { 
+                enqueue_action(set_light_mode, temp, $5); 
              } ;
           
     
-blinds_command: object START SET_BLINDS_MODE LPAREN INTEGER RPAREN { 
-                enqueue_action(set_blinds_mode, get_device($1), $5); 
+blinds_command: ROOM START SET_BLINDS_MODE LPAREN INTEGER RPAREN { 
+                enqueue_action(set_blinds_mode, temp, $5); 
              } ;
 
-set_conditioner: object START SET_TEMPERATURE LPAREN INTEGER RPAREN { enqueue_action(adjust_aircon, temp, $5) ;};
+set_conditioner: ROOM START SET_TEMPERATURE LPAREN INTEGER RPAREN { enqueue_action(set_temperature, temp, $5) ;};
 
 
-set_volume_statement: object START SET_AUDIO_LEVEL LPAREN INTEGER RPAREN { enqueue_action(set_audio_level, temp, $5) ;};
+set_volume_statement: ROOM START SET_AUDIO_LEVEL LPAREN INTEGER RPAREN { enqueue_action(set_audio_level, temp, $5) ;};
              
              
-info_command: object START INFO {enqueue_action(print_atribute_room, get_device($1), 0) ; };
+display_coomand: ROOM START INFO {enqueue_action(print_information_room, temp, 0) ; };
 
 
 print_statement: PRINT LPAREN message_name RPAREN {enqueue_action(print_message, $3 , 0) ;}          
 ;
 
-object: STRING { $$ = get_device($1); }
+ROOM: STRING { $$ = temp; }
       ;
       
 message_name: STRING
@@ -111,7 +117,7 @@ int main(int argc, char* argv[]) {
 
     yyin = input_file;
 
-    Device* obj = NULL; 
+    Room* obj = NULL; 
 
     yyparse();
     execute_actions();
